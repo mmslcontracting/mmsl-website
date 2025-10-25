@@ -1,0 +1,8 @@
+.astro
+.vscode
+node_modules
+public
+dist
+build
+.env
+pnpm-lock.yaml
