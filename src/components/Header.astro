@@ -1,0 +1,37 @@
+---
+import { Image } from "astro:assets"
+
+const logoSrc = '/images/mmspaint_logo.jpeg'
+---
+
+<header class="fixed top-0 z-50 grid h-[13vh] w-screen place-items-center bg-white shadow-sm">
+  <div class="container mx-auto flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3">
+      <Image
+        width={150}
+        height={50}
+        src={logoSrc}
+        alt="MMS Home Paint logo"
+        class="h-10 w-auto rounded-none md:h-16 lg:h-18"
+      />
+    </a>
+
+    <nav
+      class="hidden gap-10 text-base font-medium text-gray-700 md:flex"
+      aria-label="Main navigation"
+    >
+      <a href="/#about" class="hover:underline">About</a>
+      <a href="/#services" class="hover:underline">Services</a>
+      <a href="/portfolio" class="hover:underline">Portfolio</a>
+      <a href="/contact" class="hover:underline">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-6">
+      <a
+        href="/contact"
+        class="btn-primary btn-base"
+        >Get Quote</a
+      >
+    </div>
+  </div>
+</header>
