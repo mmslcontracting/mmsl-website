@@ -57,7 +57,7 @@
 }
 
 @utility btn {
-  @apply inline-flex items-center justify-center rounded-none transition-all duration-300 ease-in-out hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-70;
+  @apply inline-flex items-center justify-center rounded-sm transition-all duration-300 ease-in-out hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-70;
 }
 
 @utility btn-lg {
@@ -79,8 +79,6 @@
 @utility btn-secondary {
   @apply btn bg-white text-primary border border-primary backdrop-blur-md;
 }
-
-
 
 h1,
 h2,
