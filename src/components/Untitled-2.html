@@ -1,0 +1,195 @@
+---
+const projects = [
+  {
+    id: 1,
+    img: '/images/recent-project/bathroom.jpeg',
+    title: 'Modern Bathroom Remodel',
+    location: 'Boston, MA',
+    category: 'Bathroom',
+  },
+  {
+    id: 2,
+    img: '/images/recent-project/living-room.jpeg',
+    title: 'Contemporary Living Space',
+    location: 'New York, NY',
+    category: 'Living Room',
+  },
+  {
+    id: 3,
+    img: '/images/recent-project/bathroom2.jpeg',
+    title: 'Luxury Spa Bathroom',
+    location: 'New Jersey',
+    category: 'Bathroom',
+  },
+  {
+    id: 4,
+    img: '/images/recent-project/bathroom3.jpeg',
+    title: 'Master Bath Upgrade',
+    location: 'New York, NY',
+    category: 'Bathroom',
+  },
+]
+---
+
+<section class="py-20" style="background-color: var(--color-surface);">
+  <div class="container mx-auto px-6">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <!-- Left Side - Text Content -->
+      <div
+        class="flex flex-col items-center gap-6 text-center lg:items-start lg:pr-10 lg:text-left"
+      >
+        <span class="inline-block text-sm font-semibold tracking-[2px] text-black uppercase"
+          >Portfolio</span
+        >
+
+        <h2
+          class="font-serif text-4xl leading-tight font-bold text-gray-900 md:text-5xl lg:text-6xl"
+        >
+          Recent Projects
+        </h2>
+
+        <p class="text-lg leading-relaxed text-gray-600">
+          Explore our portfolio of stunning renovations across New Jersey, Boston, and New York.
+          From modern bathrooms to contemporary living spaces, we bring your vision to life with
+          exceptional craftsmanship and attention to detail.
+        </p>
+
+        <div class="mt-5 flex flex-col gap-8 sm:flex-row sm:gap-10">
+          <div class="flex flex-col gap-1">
+            <div class="font-serif text-4xl font-bold text-gray-900 md:text-5xl">500+</div>
+            <div class="text-sm tracking-wider text-gray-600 uppercase">Projects Completed</div>
+          </div>
+          <div class="flex flex-col gap-1">
+            <div class="font-serif text-4xl font-bold text-gray-900 md:text-5xl">15+</div>
+            <div class="text-sm tracking-wider text-gray-600 uppercase">Years Experience</div>
+          </div>
+        </div>
+
+        <a
+          href="/portfolio"
+          class="group mt-2 inline-flex items-center gap-3 border-2 border-black bg-black px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black"
+        >
+          View Full Portfolio
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="transition-transform duration-300 group-hover:translate-x-1"
+          >
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Right Side - Bento Grid -->
+      <div class="grid auto-rows-[140px] grid-cols-2 gap-4 md:grid-cols-4">
+        <!-- Item 1 - Large -->
+        <div
+          class="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:shadow-2xl"
+        >
+          <img
+            src="/images/recent-project/bathroom.jpeg"
+            alt="Modern Bathroom Remodel in Boston, MA"
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+          <div
+            class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/10 to-black/10 p-5 transition-all duration-300 group-hover:from-black/85 group-hover:via-black/30"
+          >
+            <span
+              class="mb-2.5 inline-block w-fit rounded-full bg-white/20 px-3 py-1 text-[11px] font-semibold tracking-wide text-white uppercase backdrop-blur-md"
+            >
+              Bathroom
+            </span>
+            <h3 class="mb-1.5 font-serif text-lg leading-tight font-semibold text-white">
+              Modern Bathroom Remodel
+            </h3>
+            <p class="flex items-center gap-1 text-[13px] text-white/90">📍 Boston, MA</p>
+          </div>
+        </div>
+
+        <!-- Item 2 - Medium -->
+        <div
+          class="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:shadow-2xl"
+        >
+          <img
+            src="/images/recent-project/living-room.jpeg"
+            alt="Contemporary Living Space in New York, NY"
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+          <div
+            class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/10 to-black/10 p-5 transition-all duration-300 group-hover:from-black/85 group-hover:via-black/30"
+          >
+            <span
+              class="mb-2.5 inline-block w-fit rounded-full bg-white/20 px-3 py-1 text-[11px] font-semibold tracking-wide text-white uppercase backdrop-blur-md"
+            >
+              Living Room
+            </span>
+            <h3 class="mb-1.5 font-serif text-lg leading-tight font-semibold text-white">
+              Contemporary Living Space
+            </h3>
+            <p class="flex items-center gap-1 text-[13px] text-white/90">📍 New York, NY</p>
+          </div>
+        </div>
+
+        <!-- Item 3 - Tall -->
+        <div
+          class="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:shadow-2xl"
+        >
+          <img
+            src="/images/recent-project/bathroom2.jpeg"
+            alt="Luxury Spa Bathroom in New Jersey"
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+          <div
+            class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/10 to-black/10 p-5 transition-all duration-300 group-hover:from-black/85 group-hover:via-black/30"
+          >
+            <span
+              class="mb-2.5 inline-block w-fit rounded-full bg-white/20 px-3 py-1 text-[11px] font-semibold tracking-wide text-white uppercase backdrop-blur-md"
+            >
+              Bathroom
+            </span>
+            <h3 class="mb-1.5 font-serif text-lg leading-tight font-semibold text-white">
+              Luxury Spa Bathroom
+            </h3>
+            <p class="flex items-center gap-1 text-[13px] text-white/90">📍 New Jersey</p>
+          </div>
+        </div>
+
+        <!-- Item 4 - Small -->
+        <div
+          class="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:shadow-2xl"
+        >
+          <img
+            src="/images/recent-project/bathroom3.jpeg"
+            alt="Master Bath Upgrade in New York, NY"
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+          <div
+            class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/10 to-black/10 p-5 transition-all duration-300 group-hover:from-black/85 group-hover:via-black/30"
+          >
+            <span
+              class="mb-2.5 inline-block w-fit rounded-full bg-white/20 px-3 py-1 text-[11px] font-semibold tracking-wide text-white uppercase backdrop-blur-md"
+            >
+              Bathroom
+            </span>
+            <h3 class="mb-1.5 font-serif text-lg leading-tight font-semibold text-white">
+              Master Bath Upgrade
+            </h3>
+            <p class="flex items-center gap-1 text-[13px] text-white/90">📍 New York, NY</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
