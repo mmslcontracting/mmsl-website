@@ -16,8 +16,8 @@ const categories = [
     accent: 'from-accent via-[#d4b684] to-[#f8e8c7]',
     images: [
       '/images/portfolio/exterior/1.jpeg',
-      '/images/portfolio/exterior/2.jpeg',
       '/images/portfolio/exterior/2b435148-b141-4bdd-baa4-43cea22e3751.jpeg',
+      '/images/portfolio/exterior/2.jpeg',
       '/images/portfolio/exterior/3.jpeg',
       '/images/portfolio/exterior/4.jpeg',
       '/images/portfolio/exterior/5.jpeg',
@@ -30,15 +30,24 @@ const categories = [
     accent: 'from-black to-white/50',
     images: [
       '/images/portfolio/bathroom/1.jpeg',
+      '/images/portfolio/bathroom/1-1.jpeg',
       '/images/portfolio/bathroom/2.jpeg',
+      '/images/portfolio/bathroom/2-1.jpeg',
+      '/images/portfolio/bathroom/2-2.jpeg',
       '/images/portfolio/bathroom/3.jpeg',
       '/images/portfolio/bathroom/4.jpeg',
       '/images/portfolio/bathroom/5.jpeg',
       '/images/portfolio/bathroom/6.jpeg',
+      '/images/portfolio/videos/1.mp4',
+      '/images/portfolio/videos/4.mp4',
       '/images/portfolio/bathroom/7.jpeg',
       '/images/portfolio/bathroom/8.jpeg',
+      '/images/portfolio/videos/2.mp4',
+      '/images/portfolio/videos/3.mp4',
       '/images/portfolio/bathroom/9.jpeg',
       '/images/portfolio/bathroom/10.jpeg',
+      '/images/portfolio/bathroom/11.jpeg',
+      '/images/portfolio/bathroom/12.jpeg',
     ],
   },
 ]
@@ -56,6 +65,8 @@ const filters = [
   { id: 'all', label: 'All Projects' },
   ...categories.map((category) => ({ id: category.id, label: category.label })),
 ]
+
+const isVideoSource = (src: string) => src.toLowerCase().endsWith('.mp4')
 
 export default function PortfolioGallery() {
   const [activeFilter, setActiveFilter] = useState('all')
@@ -131,13 +142,41 @@ export default function PortfolioGallery() {
               className="group relative block cursor-pointer overflow-hidden rounded-3xl border border-gray-200 bg-white p-0 shadow-lg transition hover:shadow-2xl"
               onClick={() => openModal(index)}
             >
-              <img
-                src={item.src}
-                alt={`${item.label} project`}
-                className="h-64 w-full cursor-pointer object-cover transition duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
+              {isVideoSource(item.src) ? (
+                <div className="h-64 w-full">
+                  <video
+                    src={item.src}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    muted
+                    loop
+                    playsInline
+                    onMouseEnter={(event) => {
+                      event.currentTarget.play().catch(() => {})
+                    }}
+                    onMouseLeave={(event) => {
+                      event.currentTarget.pause()
+                      try {
+                        event.currentTarget.currentTime = 0
+                      } catch {}
+                    }}
+                  />
+                </div>
+              ) : (
+                <img
+                  src={item.src}
+                  alt={`${item.label} project`}
+                  className="h-64 w-full cursor-pointer object-cover transition duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              )}
               <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/60 opacity-0 transition duration-500 group-hover:opacity-100" />
+              {isVideoSource(item.src) && (
+                <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100">
+                  <span className="radial-play flex h-14 w-14 items-center justify-center rounded-full border border-white/80 bg-black/60 text-2xl text-white">
+                    ▶
+                  </span>
+                </span>
+              )}
               <div className="absolute right-0 bottom-0 left-0 px-5 pt-3 pb-4 text-left text-white">
                 <p className="text-xs tracking-[0.4em] text-white/80 uppercase">{item.label}</p>
               </div>
@@ -169,11 +208,23 @@ export default function PortfolioGallery() {
           >
             →
           </button>
-          <img
-            src={currentImage.src}
-            alt="Large gallery"
-            className="h-full max-h-[90vh] max-w-[90vw] rounded-3xl object-contain"
-          />
+          {isVideoSource(currentImage.src) ? (
+            <video
+              src={currentImage.src}
+              className="h-full max-h-[90vh] max-w-[90vw] rounded-3xl object-contain"
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            <img
+              src={currentImage.src}
+              alt="Large gallery"
+              className="h-full max-h-[90vh] max-w-[90vw] rounded-3xl object-contain"
+            />
+          )}
         </div>
       )}
     </section>

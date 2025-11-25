@@ -1,36 +1,43 @@
 ---
-const heroImg = '/images/hero.jpg'
+import { Image } from 'astro:assets'
+
+const heroImg = '/images/coming-soon/wallpaper.jpeg'
 ---
 
-<section class="relative first-section flex min-h-[87svh] flex-col justify-center overflow-hidden">
+<section class="first-section relative flex min-h-[87svh] flex-col justify-center overflow-hidden">
   <div class="absolute inset-0 -z-10 h-full w-full">
-    <img src={heroImg} alt="Hero background" class="h-full w-full object-cover" />
-    <div class="absolute inset-0 bg-black opacity-60"></div>
+    <Image
+      width={1200}
+      height={1600}
+      src={heroImg}
+      alt="Hero background"
+      class="h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black opacity-75"></div>
   </div>
 
   <div class="relative z-10 container mx-auto">
     <div class="">
-      <p class="mb-4 text-sm text-white/80">Interior design — New Jersey · Boston · New York</p>
-      <h1
-        class="text-5xl text-white md:text-6xl lg:text-[80px]"
-      >
+      <p class="mb-4 text-sm text-white/80">New York City · North Jersey · Central Jersey</p>
+      <h1 class="text-5xl text-white md:text-6xl lg:text-[80px]">
         Improve / <span class="text-gradient-primary">Transform</span><br />your space
       </h1>
 
+      <p class="mt-8 max-w-md text-white/90">
+        Reliable craftsmen known for extraordinary attention to detail and pragmatic
+        troubleshooting. <br />
+
+        The mind creates the beautiful, the heart creates the home, home sweet home.
+      </p>
+
       <div class="mt-8 flex gap-4">
-        <a href="#" class="btn-primary btn-lg"
-          >Start Project</a
-        >
+        <a href="/contact" class="btn-primary btn-lg">Start Project</a>
         <a
-          href="#"
-          class="btn border border-white text-white transition hover:bg-white hover:text-black btn-lg backdrop-blur-sm"
+          href="#recentProject"
+          class="btn btn-lg border border-white text-white backdrop-blur-sm transition hover:bg-white hover:text-black"
           >Learn More</a
         >
       </div>
-
-      <p class="mt-8 max-w-md text-white/90">
-        The mind creates the beautiful, the heart creates the home, home sweet home.
-      </p>
     </div>
   </div>
 </section>

@@ -1,18 +1,20 @@
 ---
 import ComingSoonGallery from '@/components/ComingSoonGallery'
+import { Image } from 'astro:assets';
 
-const wallpaper = '/images/coming-soon/wallpaper.jpeg'
+const wallpaper = '/images/coming-soon/coming-soon-bg.jpeg'
 const heroText = 'New project launching soon'
-const description =
-  'An immersive residential concept redefining coastal living with refined materials, layered lighting, and custom millwork.'
+;('An immersive residential concept redefining coastal living with refined materials, layered lighting, and custom millwork.')
 ---
 
 <section class="relative overflow-hidden bg-black text-white">
   <div class="absolute inset-0">
-    <img
+    <Image
       src={wallpaper}
       alt="Coming soon project wallpaper"
       class="h-full w-full object-cover"
+      width={1600}
+      height={1200}
       loading="lazy"
     />
     <div class="absolute inset-0 bg-linear-to-b from-black/80 via-black/60 to-black/90"></div>
@@ -23,22 +25,8 @@ const description =
   >
     <p class="text-gradient-primary text-sm tracking-[0.8em] uppercase">Coming Soon</p>
     <h2 class="font-serif text-4xl leading-tight font-semibold md:text-5xl">{heroText}</h2>
-    <p class="max-w-3xl text-base text-white/80">{description}</p>
     <div class="mt-10 w-full">
       <ComingSoonGallery client:load />
-    </div>
-    <div class="mt-12 flex items-center gap-4 text-sm text-white/60">
-      <div class="flex flex-col items-center">
-        <span class="text-primary text-2xl font-semibold">65%</span>
-        <span class="tracking-[0.3em] text-white/80 uppercase">Complete</span>
-      </div>
-      <div class="h-1 w-40 rounded-full bg-white/30">
-        <div
-          class="h-full w-[65%] rounded-full"
-          style="background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));"
-        >
-        </div>
-      </div>
     </div>
   </div>
 </section>

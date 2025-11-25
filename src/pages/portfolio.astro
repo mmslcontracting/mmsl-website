@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import PortfolioGallery from '@/components/PortfolioGallery'
+import { Image } from 'astro:assets'
 
 const heroImage = '/images/portfolio/wallpaper.jpeg'
 ---
@@ -8,13 +9,15 @@ const heroImage = '/images/portfolio/wallpaper.jpeg'
 <Layout>
   <section class="relative min-h-screen overflow-hidden bg-black text-white">
     <div class="absolute inset-0">
-      <img
+      <Image
+        width={1200}
+        height={1600}
         src={heroImage}
         alt="Portfolio showcase"
         class="h-full w-full object-cover"
         loading="lazy"
       />
-      <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/90"></div>
+      <div class="absolute inset-0 bg-linear-to-b from-black/80 via-black/70 to-black/90"></div>
     </div>
     <div
       class="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center"
