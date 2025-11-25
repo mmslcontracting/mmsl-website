@@ -9,27 +9,6 @@ const storyParagraphs = [
   'We are a collective of designers, artisans, and builders who thrive on solving layered spatial challenges. From concept studies to the final punch list, we keep the dialogue transparent and the process purposeful.',
 ]
 
-const stats = [
-  { label: 'Years crafting interiors', value: '15+' },
-  { label: 'Projects completed', value: '500+' },
-  { label: 'Awards & honors', value: '12' },
-]
-
-const values = [
-  {
-    title: 'Thoughtful Materials',
-    copy: 'We source stone, wood, and textiles that age gracefully and feel attuned to your lifestyle.',
-  },
-  {
-    title: 'Human-Centered Design',
-    copy: 'Rooms that anticipate how families gather, rest, entertain, and retreat.',
-  },
-  {
-    title: 'Transparent Process',
-    copy: 'Budget, timeline, and decisions are shared so you feel confident from day one.',
-  },
-]
-
 const timeline = [
   { title: 'Discovery', copy: 'Listening tours, site walks, and research.' },
   { title: 'Design', copy: 'Mood, material palettes, and architectural detailing.' },
@@ -58,7 +37,7 @@ const timeline = [
       <h1 class="mt-6 max-w-3xl font-serif text-4xl leading-tight font-semibold md:text-5xl">
         Get to <span class="text-gradient-primary">know</span> us
       </h1>
-      <p class="mt-6 max-w-2xl text-lg text-white/80">Learn more about MMS Home Paint.</p>
+      <p class="mt-6 max-w-2xl text-lg text-white/80">Learn more about MMS Paint.</p>
     </div>
   </section>
 
@@ -71,20 +50,28 @@ const timeline = [
             We build with intention
           </h2>
           <div class="mt-6 space-y-5 text-gray-600">
-            {storyParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+            <p>
+              This is how it all started: nature has all the components that form a dream harmony,
+              making us enjoy unique experiences that we never dreamed of living. At MMS Paint &
+              Home Improvement Corp, our dream and goal is that our customers have a space where
+              they can enjoy with their love ones. We can transform their spaces in harmony with all
+              the components in a complete interior renovation or make a cosmetic update. The name
+              of our MMS firm is derived from the initials of each member of my family, which remind
+              us of the commitment we make in every project. We take it as a family project, forming
+              part of every dream that comes true for our customers.
+            </p>
           </div>
         </div>
-        <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-lg">
-          <div class="mb-6 text-sm tracking-[0.4em] text-gray-500 uppercase">Milestones</div>
+        <div class="rounded-3xl ">
           <div class="grid gap-6">
-            {
-              stats.map((stat) => (
-                <div class="flex flex-col gap-1 text-gray-700">
-                  <span class="text-3xl font-semibold text-black">{stat.value}</span>
-                  <span class="text-sm tracking-[0.3em] text-gray-500 uppercase">{stat.label}</span>
-                </div>
-              ))
-            }
+            <Image
+              src="/images/about/history.jpeg"
+              alt="MMS Paint family team"
+              width={600}
+              height={400}
+              class="h-full w-full rounded-sm object-cover"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
