@@ -3,6 +3,19 @@ import CTA from '@/components/CTA.astro'
 import Layout from '@/layouts/Layout.astro'
 import { Image } from 'astro:assets'
 
+const seo = {
+  title: 'About Us - Our Story & Mission',
+  description:
+    'Learn about MMS Home Paint, a family-owned painting company serving NYC and New Jersey for over a decade. Discover our commitment to quality craftsmanship and customer satisfaction.',
+  keywords: [
+    'about MMS Home Paint',
+    'painting company history',
+    'family painting business',
+    'NYC painters',
+    'New Jersey painting contractors',
+  ],
+}
+
 const heroImage = '/images/portfolio/interior/1.jpeg'
 const storyParagraphs = [
   'For over a decade, we have translated architectural intent into deeply personal interiors across New York City · North Jersey · Central Jersey. Our work balances heritage craftsmanship with contemporary fluidity, making each space feel curated yet lived-in.',
@@ -17,7 +30,7 @@ const timeline = [
 ]
 ---
 
-<Layout>
+<Layout title={seo.title} description={seo.description} keywords={seo.keywords}>
   <section class="first-section relative overflow-hidden bg-black text-white">
     <div class="absolute inset-0 opacity-80">
       <Image
@@ -62,7 +75,7 @@ const timeline = [
             </p>
           </div>
         </div>
-        <div class="rounded-3xl ">
+        <div class="rounded-3xl">
           <div class="grid gap-6">
             <Image
               src="/images/about/history.jpeg"

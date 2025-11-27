@@ -1,0 +1,193 @@
+---
+export interface Props {
+  title?: string
+  description?: string
+  keywords?: string[]
+  image?: string
+  type?: 'website' | 'article' | 'profile'
+  canonical?: string
+  noindex?: boolean
+}
+
+const siteName = 'MMS Paint'
+const siteUrl = 'https://www.mmshomepaint.com'
+const defaultImage = '/images/og-image.png'
+const twitterHandle = '@mmspaint'
+
+const {
+  title = 'Professional Painting Services in NYC, New Jersey & Boston',
+  description = 'MMS Home Paint offers premium residential and commercial painting services in New York City, North Jersey, and Central Jersey. Interior, exterior, cabinet refinishing, and more. Get a free quote today!',
+  keywords = [
+    'painting services',
+    'house painting',
+    'interior painting',
+    'exterior painting',
+    'commercial painting',
+    'residential painting',
+    'New York City painter',
+    'New Jersey painter',
+    'cabinet refinishing',
+    'deck staining',
+    'pressure washing',
+    'home improvement',
+    'MMS Home Paint',
+  ],
+  image = defaultImage,
+  type = 'website',
+  canonical,
+  noindex = false,
+} = Astro.props
+
+const pageTitle = title === siteName ? title : `${title} | ${siteName}`
+const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`
+const canonicalUrl = canonical || Astro.url.href
+
+// JSON-LD Structured Data for Local Business
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${siteUrl}/#business`,
+  name: siteName,
+  description: description,
+  url: siteUrl,
+  telephone: '+1-631-805-6259',
+  email: 'mmshomeimprovement@gmail.com',
+  image: fullImageUrl,
+  logo: `${siteUrl}/images/mmspaint_logo.jpeg`,
+  openingHours: 'Mo-Fr 08:00-17:00',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'New York',
+    addressRegion: 'NY',
+    addressCountry: 'US',
+  },
+  areaServed: [
+    {
+      '@type': 'City',
+      name: 'New York City',
+    },
+    {
+      '@type': 'State',
+      name: 'New Jersey',
+    },
+  ],
+  sameAs: ['https://www.facebook.com/Mmspaint1/', 'https://www.linkedin.com/in/maynor-perez/'],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Painting Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Interior Painting',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Exterior Painting',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Commercial Painting',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Cabinet Refinishing',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Deck Staining',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Pressure Washing',
+        },
+      },
+    ],
+  },
+}
+
+// Website Schema
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  url: siteUrl,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${siteUrl}/search?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+}
+
+// Organization Schema
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteName,
+  url: siteUrl,
+  logo: `${siteUrl}/images/mmspaint_logo.jpeg`,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+1-631-805-6259',
+    contactType: 'customer service',
+    availableLanguage: ['English', 'Spanish'],
+  },
+  sameAs: ['https://www.facebook.com/Mmspaint1/', 'https://www.linkedin.com/in/maynor-perez/'],
+}
+---
+
+<!-- Primary Meta Tags -->
+<link rel="sitemap" href="/sitemap-index.xml" />
+<meta name="title" content={pageTitle} />
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords.join(', ')} />
+<meta name="author" content={siteName} />
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+<meta name="googlebot" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+<link rel="canonical" href={canonicalUrl} />
+<title>{pageTitle}</title>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={fullImageUrl} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={fullImageUrl} />
+<meta name="twitter:site" content={twitterHandle} />
+
+<!-- Additional SEO Meta Tags -->
+<meta name="theme-color" content="#23a5d9" />
+<meta name="format-detection" content="telephone=yes" />
+<meta name="geo.region" content="US-NY" />
+<meta name="geo.placename" content="New York City" />
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />

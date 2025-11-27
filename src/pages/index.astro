@@ -7,9 +7,25 @@ import RecentProject from '@/components/RecentProject.astro'
 import Services from '@/components/Services.astro'
 import ComingSoon from '@/components/ComingSoon.astro'
 import CTA from '@/components/CTA.astro'
+
+const seo = {
+  title: 'Professional Painting Services in NYC & New Jersey',
+  description:
+    'MMS Home Paint delivers premium residential and commercial painting services in New York City, North Jersey, and Central Jersey. Interior, exterior, cabinet refinishing & more.',
+  keywords: [
+    'painting services NYC',
+    'house painting New Jersey',
+    'interior painting',
+    'exterior painting',
+    'commercial painter',
+    'residential painting',
+    'cabinet refinishing',
+    'MMS Home Paint',
+  ],
+}
 ---
 
-<Layout>
+<Layout title={seo.title} description={seo.description} keywords={seo.keywords}>
   <Hero />
   <RecentProject />
   <Services />

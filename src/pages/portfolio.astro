@@ -3,10 +3,24 @@ import Layout from '@/layouts/Layout.astro'
 import PortfolioGallery from '@/components/PortfolioGallery'
 import { Image } from 'astro:assets'
 
+const seo = {
+  title: 'Portfolio - Our Painting Projects',
+  description:
+    'Browse our portfolio of completed painting projects including interior, exterior, bathroom renovations, and commercial work across NYC and New Jersey.',
+  keywords: [
+    'painting portfolio',
+    'interior painting gallery',
+    'exterior painting examples',
+    'bathroom renovation',
+    'commercial painting projects',
+    'before after painting',
+  ],
+}
+
 const heroImage = '/images/portfolio/wallpaper.jpeg'
 ---
 
-<Layout>
+<Layout title={seo.title} description={seo.description} keywords={seo.keywords}>
   <section class="relative min-h-screen overflow-hidden bg-black text-white">
     <div class="absolute inset-0">
       <Image

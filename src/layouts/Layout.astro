@@ -2,17 +2,43 @@
 import '@/styles/global.css'
 import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
+import SEO from '@/components/SEO.astro'
 import { ClientRouter } from 'astro:transitions'
+
+export interface Props {
+  title?: string
+  description?: string
+  keywords?: string[]
+  image?: string
+  type?: 'website' | 'article' | 'profile'
+  canonical?: string
+  noindex?: boolean
+}
+
+const { title, description, keywords, image, type, canonical, noindex } = Astro.props
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="MMS Paint" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <SEO
+      title={title}
+      description={description}
+      keywords={keywords}
+      image={image}
+      type={type}
+      canonical={canonical}
+      noindex={noindex}
+    />
     <ClientRouter />
-    <title>MMS Home Paint</title>
   </head>
   <body>
     <Header />
@@ -29,6 +55,6 @@ import { ClientRouter } from 'astro:transitions'
     margin: 0;
     width: 100%;
     height: 100%;
-		scroll-behavior: smooth;
+    scroll-behavior: smooth;
   }
 </style>

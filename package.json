@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
+    "@astrojs/sitemap": "^3.6.0",
     "@fontsource/libre-baskerville": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@tailwindcss/vite": "^4.1.16",
