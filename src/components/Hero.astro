@@ -4,16 +4,17 @@ import { Image } from 'astro:assets'
 const heroImg = '/images/coming-soon/wallpaper.jpeg'
 ---
 
-<section class="first-section relative flex min-h-[87svh] flex-col justify-center overflow-hidden">
-  <div class="absolute inset-0 -z-10 h-full w-full">
+<section class="first-section relative flex min-h-[87svh] flex-col justify-center overflow-hidden bg-black">
+  <div class="absolute inset-0 opacity-80">
     <Image
       width={1200}
       height={1600}
       src={heroImg}
       alt="Hero background"
       class="h-full w-full object-cover"
+      fetchpriority="high"
     />
-    <div class="absolute inset-0 bg-black opacity-75"></div>
+    <div class="absolute inset-0 bg-linear-to-b from-black/70 via-black/60 to-black/80"></div>
   </div>
 
   <div class="relative z-10 container mx-auto">

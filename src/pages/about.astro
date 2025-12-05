@@ -17,10 +17,6 @@ const seo = {
 }
 
 const heroImage = '/images/portfolio/interior/1.jpeg'
-const storyParagraphs = [
-  'For over a decade, we have translated architectural intent into deeply personal interiors across New York City · North Jersey · Central Jersey. Our work balances heritage craftsmanship with contemporary fluidity, making each space feel curated yet lived-in.',
-  'We are a collective of designers, artisans, and builders who thrive on solving layered spatial challenges. From concept studies to the final punch list, we keep the dialogue transparent and the process purposeful.',
-]
 
 const timeline = [
   { title: 'Discovery', copy: 'Listening tours, site walks, and research.' },
@@ -39,7 +35,8 @@ const timeline = [
         src={heroImage}
         alt="Design studio"
         class="h-full w-full object-cover"
-        loading="lazy"
+        loading="eager"
+        fetchpriority="high"
       />
       <div class="absolute inset-0 bg-linear-to-b from-black/70 via-black/60 to-black/80"></div>
     </div>
