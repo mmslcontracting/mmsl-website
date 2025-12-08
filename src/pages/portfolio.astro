@@ -37,7 +37,7 @@ const heroImage = '/images/portfolio/wallpaper.jpeg'
     </div>
     <div class="relative z-10 flex h-[87svh] flex-col items-center justify-center px-6 text-center">
       <p class="text-sm tracking-[0.5em] text-white/70 uppercase">Portfolio</p>
-      <h1 class="mt-4 font-serif text-4xl leading-tight font-semibold md:text-6xl animate-fade-up">
+      <h1 class="animate-fade-up mt-4 font-serif text-4xl leading-tight font-semibold md:text-6xl">
         Bespoke
         <span class="text-gradient-primary">Interiors & Exteriors</span> for the USA
       </h1>
@@ -48,6 +48,6 @@ const heroImage = '/images/portfolio/wallpaper.jpeg'
     </div>
   </section>
 
-  <PortfolioGallery client:visible />
+  <PortfolioGallery client:only="react" />
   <CTA />
 </Layout>
