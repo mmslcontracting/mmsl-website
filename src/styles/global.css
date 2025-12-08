@@ -110,6 +110,14 @@ input {
   border-radius: 4px;
 }
 
+select {
+  border-radius: 4px;
+}
+
+textarea {
+  border-radius: 4px;
+}
+
 @layer utilities {
   .container {
     padding-left: 20px;

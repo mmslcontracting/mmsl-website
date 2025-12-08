@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import Header from '@/components/Header.astro'
+import { ContactForm } from '@/components/ContactForm'
 
 const seo = {
   title: 'Contact Us - Get a Free Quote',
@@ -37,79 +38,7 @@ const seo = {
         <!-- Left: Contact Form -->
         <div class="animate-fade-right">
           <h2 class="mb-6 font-serif text-2xl text-gray-900">Send us a message</h2>
-          <form class="space-y-6">
-            <div>
-              <label for="name" class="mb-2 block text-sm font-medium text-gray-700"
-                >Full Name</label
-              >
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                class="w-full rounded-none border border-gray-300 px-4 py-3 focus:border-black focus:outline-none"
-                placeholder="John Doe"
-              />
-            </div>
-
-            <div>
-              <label for="email" class="mb-2 block text-sm font-medium text-gray-700"
-                >Email Address</label
-              >
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                class="w-full rounded-none border border-gray-300 px-4 py-3 focus:border-black focus:outline-none"
-                placeholder="john@example.com"
-              />
-            </div>
-
-            <div>
-              <label for="phone" class="mb-2 block text-sm font-medium text-gray-700"
-                >Phone Number</label
-              >
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                class="w-full rounded-none border border-gray-300 px-4 py-3 focus:border-black focus:outline-none"
-                placeholder="(555) 555-5555"
-              />
-            </div>
-
-            <div>
-              <label for="location" class="mb-2 block text-sm font-medium text-gray-700"
-                >Project Location</label
-              >
-              <select
-                id="location"
-                name="location"
-                class="w-full rounded-none border border-gray-300 px-4 py-3 focus:border-black focus:outline-none"
-              >
-                <option value="">Select a location</option>
-                <option value="NYC">New York City</option>
-                <option value="NJ">North Jersey</option>
-                <option value="CJ">Central Jersey</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="message" class="mb-2 block text-sm font-medium text-gray-700"
-                >Message</label
-              >
-              <textarea
-                id="message"
-                name="message"
-                rows="5"
-                required
-                class="w-full rounded-none border border-gray-300 px-4 py-3 focus:border-black focus:outline-none"
-                placeholder="Tell us about your project..."></textarea>
-            </div>
-
-            <button type="submit" class="btn-primary btn-lg w-full"> Send Message </button>
-          </form>
+         <ContactForm client:visible />
         </div>
 
         <!-- Right: Contact Info & Map -->
