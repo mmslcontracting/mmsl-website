@@ -1,10 +1,8 @@
 ---
 import ComingSoonGallery from '@/components/ComingSoonGallery'
-import { Image } from 'astro:assets';
+import { Image } from 'astro:assets'
 
 const wallpaper = '/images/coming-soon/coming-soon-bg.jpeg'
-const heroText = 'New project launching soon'
-;('An immersive residential concept redefining coastal living with refined materials, layered lighting, and custom millwork.')
 ---
 
 <section class="relative overflow-hidden bg-black text-white">
@@ -23,8 +21,14 @@ const heroText = 'New project launching soon'
   <div
     class="relative mx-auto flex min-h-[80vh] max-w-5xl flex-col items-center justify-center gap-6 px-6 py-20 text-center"
   >
-    <p class="text-gradient-primary text-sm tracking-[0.8em] uppercase">Coming Soon</p>
-    <h2 class="font-serif text-4xl leading-tight font-semibold md:text-5xl">{heroText}</h2>
+    <p class="text-sm tracking-[0.8em] uppercase">
+      <span class="text-gradient-primary">Coming Soon</span>
+    </p>
+    <h2
+      class="intersect:visible intersect:animate-fade-down intersect-once intersect-full invisible font-serif text-4xl leading-tight font-semibold md:text-5xl"
+    >
+      New project launching soon
+    </h2>
     <div class="mt-10 w-full">
       <ComingSoonGallery client:load />
     </div>

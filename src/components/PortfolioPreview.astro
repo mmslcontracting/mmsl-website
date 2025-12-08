@@ -40,18 +40,21 @@ const portfolioImages = [
     <div
       class="flex flex-col items-center justify-center gap-6 text-center lg:items-start lg:pr-10 lg:text-left"
     >
-      <span class="inline-block text-sm font-semibold tracking-[2px] text-gradient-primary uppercase"
+      <span
+        class="text-gradient-primary inline-block text-sm font-semibold tracking-[2px] uppercase"
         >Gallery</span
       >
 
-      <h2 class="font-serif text-4xl leading-tight font-bold text-gray-900 md:text-5xl lg:text-6xl">
+      <h2
+        class="invisible intersect:visible intersect:animate-flip-up intersect-once intersect-half font-serif text-4xl leading-tight font-bold text-gray-900 md:text-5xl lg:text-6xl"
+      >
         Our Portfolio
       </h2>
 
       <p class="text-lg leading-relaxed text-gray-600">
-        Explore our portfolio of stunning renovations across New York City, North Jersey and Central Jersey. From
-        modern bathrooms to contemporary living spaces, we bring your vision to life with
-        exceptional craftsmanship and attention to detail.
+        Explore our portfolio of stunning renovations across New York City, North Jersey and Central
+        Jersey. From modern bathrooms to contemporary living spaces, we bring your vision to life
+        with exceptional craftsmanship and attention to detail.
       </p>
 
       <div class="mt-5 flex flex-col gap-8 sm:flex-row sm:gap-10">
@@ -59,8 +62,10 @@ const portfolioImages = [
           <div class="font-serif text-4xl font-bold text-gray-900 md:text-5xl">13+</div>
           <div class="text-sm tracking-wider text-gray-600 uppercase">Years Experience</div>
         </div>
-         <div class="flex flex-col gap-1">
-          <div class="font-serif text-2xl font-bold text-gray-900 md:text-2xl">Many <span class="text-gradient-primary">satisfied</span> customers</div>
+        <div class="flex flex-col gap-1">
+          <div class="font-serif text-2xl font-bold text-gray-900 md:text-2xl">
+            Many <span class="text-gradient-primary">satisfied</span> customers
+          </div>
         </div>
       </div>
 
@@ -80,7 +85,9 @@ const portfolioImages = [
         </svg>
       </a>
     </div>
-    <div class="parent">
+    <div
+      class="parent intersect:animate-fade-left intersect-once intersect-half intersect:visible invisible"
+    >
       {
         portfolioImages.map((image) => (
           <article class="child">

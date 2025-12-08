@@ -27,5 +27,8 @@
     "tailwindcss-animated": "^2.0.0",
     "tailwindcss-intersect": "^2.2.0",
     "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19"
   }
 }

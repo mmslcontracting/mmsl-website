@@ -137,9 +137,10 @@ export default function PortfolioGallery() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredItems.map((item, index) => (
             <button
-              key={`${item.src}-${index}`}
+              key={`${activeFilter}-${item.src}-${index}`}
               type="button"
-              className="group relative block cursor-pointer overflow-hidden rounded-3xl border border-gray-200 bg-white p-0 shadow-lg transition hover:shadow-2xl"
+              className="group intersect:visible intersect:animate-fade-up intersect-once animate-duration-500 invisible relative block cursor-pointer overflow-hidden rounded-3xl border border-gray-200 bg-white p-0 shadow-lg transition hover:shadow-2xl"
+              style={{ animationDelay: `${index * 50}ms` }}
               onClick={() => openModal(index)}
             >
               {isVideoSource(item.src) ? (

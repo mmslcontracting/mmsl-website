@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro'
 import PortfolioGallery from '@/components/PortfolioGallery'
 import { Image } from 'astro:assets'
+import CTA from '@/components/CTA.astro'
 
 const seo = {
   title: 'Portfolio - Our Painting Projects',
@@ -36,8 +37,9 @@ const heroImage = '/images/portfolio/wallpaper.jpeg'
     </div>
     <div class="relative z-10 flex h-[87svh] flex-col items-center justify-center px-6 text-center">
       <p class="text-sm tracking-[0.5em] text-white/70 uppercase">Portfolio</p>
-      <h1 class="mt-4 font-serif text-4xl leading-tight font-semibold md:text-6xl">
-        Bespoke Interiors & Exteriors for the USA
+      <h1 class="mt-4 font-serif text-4xl leading-tight font-semibold md:text-6xl animate-fade-up">
+        Bespoke
+        <span class="text-gradient-primary">Interiors & Exteriors</span> for the USA
       </h1>
       <p class="mt-6 max-w-3xl text-lg text-white/80">
         American-inspired interiors: handcrafted details, noble materials, and a calm palette that
@@ -46,5 +48,6 @@ const heroImage = '/images/portfolio/wallpaper.jpeg'
     </div>
   </section>
 
-  <PortfolioGallery client:load />
+  <PortfolioGallery client:visible />
+  <CTA />
 </Layout>

@@ -46,13 +46,13 @@ export default function ComingSoonGallery() {
             key={image.src}
             type="button"
             onClick={() => openGallery(index)}
-            className="group relative block overflow-hidden rounded-2xl border border-white/30 transition hover:border-white"
+            className={`group hover:border-primary intersect:visible intersect-full invisible relative block overflow-hidden rounded-2xl border-2 border-white/30 transition hover:cursor-pointer ${index <= 1 ? 'intersect:animate-fade-left' : 'intersect:animate-fade-right'} intersect-once`}
           >
             <img
               src={image.src}
               alt={image.label}
-              className="h-28 w-28 object-cover transition duration-500 group-hover:scale-110"
               loading="lazy"
+              className="h-28 w-28 object-cover transition duration-500 group-hover:scale-110"
             />
             <span className="absolute inset-x-0 bottom-0 rounded-b-2xl bg-black/60 px-2 py-1 text-center text-[10px] tracking-[0.3em] text-white uppercase">
               {image.label}
@@ -65,7 +65,7 @@ export default function ComingSoonGallery() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4">
           <button
             type="button"
-            className="absolute top-5 right-5 rounded-full border border-white/60 bg-black/70 p-2 text-white"
+            className="absolute top-5 right-5 rounded-full border border-white/60 bg-black/70 p-2 text-white hover:cursor-pointer"
             onClick={closeGallery}
           >
             <span className="sr-only">Close gallery</span>✕

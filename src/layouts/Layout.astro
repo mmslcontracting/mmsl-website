@@ -59,7 +59,9 @@ const { title, description, keywords, image, type, canonical, noindex } = Astro.
   }
 </style>
 
-<script type="module">
+<script>
   import { Observer } from 'tailwindcss-intersect'
-  Observer.start()
+  document.addEventListener('astro:page-load', function () {
+    Observer.start()
+  })
 </script>

@@ -1,9 +1,12 @@
 @import 'tailwindcss';
 @import "tailwindcss-intersect";
+@import "tailwindcss-animated";
 @import '@fontsource/poppins/400.css';
 @import '@fontsource/poppins/500.css';
 @import '@fontsource/poppins/600.css';
 @import '@fontsource/poppins/700.css';
+
+@plugin "@tailwindcss/typography";
 
 @font-face {
   font-family: 'Libre Baskerville';
