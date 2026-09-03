@@ -77,7 +77,7 @@ export default function MobileNav() {
           <a href="/" onClick={() => setIsOpen(false)}>
             <img
               src="/images/mmspaint_logo.jpeg"
-              alt="MMS Home Paint logo"
+              alt="MMSL Contracting logo"
               className="h-12 w-auto"
             />
           </a>
