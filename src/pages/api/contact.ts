@@ -4,6 +4,28 @@ import { Resend } from 'resend'
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY)
 
+const rateLimit = new Map<string, { count: number; resetAt: number }>()
+const RATE_LIMIT_MAX = 3
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000 // 15 minutes
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now()
+  const record = rateLimit.get(ip)
+
+  if (!record || now > record.resetAt) {
+    rateLimit.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW })
+    return { allowed: true }
+  }
+
+  if (record.count >= RATE_LIMIT_MAX) {
+    const retryAfter = Math.ceil((record.resetAt - now) / 1000)
+    return { allowed: false, retryAfter }
+  }
+
+  record.count++
+  return { allowed: true }
+}
+
 const contactSchema = z.object({
   fullName: z.string().min(2, 'Name must be at least 2 characters').max(100),
   email: z.email('Please enter a valid email address'),
