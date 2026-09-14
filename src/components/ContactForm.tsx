@@ -1,32 +1,34 @@
 import { useRef, useState } from 'react'
-import emailjs from '@emailjs/browser'
 import { toast } from 'sonner'
 
 export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const [loading, setLoading] = useState(false)
 
-  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     try {
       setLoading(true)
       if (!formRef.current) return
 
-      const result = await emailjs.sendForm(
-        'service_n51umy2',
-        'template_fh1nv9j',
-        formRef.current,
-        '_vCk_56WIeEz5QjPB'
-      )
+      const formData = new FormData(formRef.current)
 
-      if (result.status !== 200) {
-        throw new Error('Failed to send message')
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const data = await res.json()
+
+      if (!res.ok || !data.success) {
+        toast.error(data.error || 'Something went wrong. Please try again.')
+        return
       }
 
       toast.success('Message sent successfully!')
       formRef.current.reset()
-    } catch (err) {
+    } catch {
       toast.error('Something went wrong. Please try again.')
     } finally {
       setLoading(false)
@@ -35,7 +37,7 @@ export function ContactForm() {
 
   return (
     <>
-      <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
+      <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-700">
             Full Name
@@ -46,7 +48,7 @@ export function ContactForm() {
             name="fullName"
             required
             className="w-full rounded-none border border-gray-300 px-4 py-3 focus:border-black focus:outline-none"
-            placeholder="John Doe"
+            placeholder="Your Name"
           />
         </div>
 
@@ -60,7 +62,7 @@ export function ContactForm() {
             name="email"
             required
             className="w-full rounded-none border border-gray-300 px-4 py-3 focus:border-black focus:outline-none"
-            placeholder="john@example.com"
+            placeholder="your@email.com"
           />
         </div>
 
@@ -73,7 +75,7 @@ export function ContactForm() {
             id="phone"
             name="phone"
             className="w-full rounded-none border border-gray-300 px-4 py-3 focus:border-black focus:outline-none"
-            placeholder="(555) 555-5555"
+            placeholder="(555) 000-0000"
           />
         </div>
 
@@ -84,6 +86,7 @@ export function ContactForm() {
           <select
             id="location"
             name="projectLocation"
+            required
             className="w-full rounded-none border border-gray-300 px-4 py-3 focus:border-black focus:outline-none"
           >
             <option value="">Select a location</option>
