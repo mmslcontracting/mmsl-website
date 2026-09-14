@@ -90,9 +90,9 @@ export default function MobileNav() {
               key={link.href}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="group hover:text-primary flex items-center gap-4 rounded-lg px-4 py-3 text-lg font-medium text-gray-700 transition-colors hover:bg-gray-50"
+              className="group hover:text-secondary flex items-center gap-4 rounded-lg px-4 py-3 text-lg font-medium text-gray-700 transition-colors hover:bg-gray-50"
             >
-              <span className="bg-primary h-1.5 w-1.5 rounded-full opacity-0 transition-opacity group-hover:opacity-100" />
+              <span className="bg-secondary h-1.5 w-1.5 rounded-full opacity-0 transition-opacity group-hover:opacity-100" />
               {link.label}
             </a>
           ))}
@@ -103,13 +103,13 @@ export default function MobileNav() {
           <a
             href="/contact"
             onClick={() => setIsOpen(false)}
-            className="btn-primary hover:bg-primary-dark block w-full rounded-lg px-6 py-3 text-center text-base font-semibold text-white transition"
+            className="btn-gold block w-full rounded-lg px-6 py-3 text-center text-base font-semibold text-gray-900 transition"
           >
             Get Free Quote
           </a>
           <p className="mt-4 text-center text-sm text-gray-500">
             Call us:{' '}
-            <a href="tel:+1-631-805-6259" className="hover:text-primary font-medium text-gray-700">
+            <a href="tel:+1-631-805-6259" className="hover:text-secondary font-medium text-gray-700">
               (631) 805-6259
             </a>
           </p>

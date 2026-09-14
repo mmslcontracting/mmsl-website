@@ -37,11 +37,13 @@
 }
 
 @theme {
-  --color-primary: #23a5d9;
-  --color-primary-dark: #1d91bf;
-  --color-primary-light: #2bb8f0;
+  --color-primary: #08627C;
+  --color-primary-dark: #065168;
+  --color-primary-light: #0a7494;
   /* Extras */
-  --color-accent: #c5a572; /* dorado suave para detalles elegantes */
+  --color-secondary: #E3C972;
+  --color-secondary-dark: #D1A333;
+  --color-accent: #E3C972; /* dorado para detalles elegantes */
   --color-muted: #6b7280; /* gris medio para texto secundario */
   --color-surface: #ebf1f7; /* fondo muy claro para secciones */
   --color-border: #e5e7eb; /* bordes sutiles */
@@ -82,6 +84,19 @@
 
 @utility btn-secondary {
   @apply btn bg-white text-primary border border-primary backdrop-blur-md;
+}
+
+@utility btn-gold {
+  @apply btn bg-secondary text-gray-900 hover:bg-secondary-dark active:bg-secondary;
+}
+
+/* Texto con degradado dorado */
+@utility text-gradient-gold {
+  background: linear-gradient(90deg, var(--color-secondary-dark), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 @utility subtitle {

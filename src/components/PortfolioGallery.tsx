@@ -124,7 +124,7 @@ export default function PortfolioGallery() {
               type="button"
               className={`cursor-pointer rounded-full border px-5 py-2 text-sm font-semibold transition ${
                 activeFilter === filter.id
-                  ? 'border-black bg-black text-white'
+                  ? 'border-primary bg-primary text-white'
                   : 'border-black/10 bg-white text-gray-700'
               }`}
               onClick={() => setActiveFilter(filter.id)}
