@@ -76,7 +76,7 @@ export default function MobileNav() {
         <div className="flex h-[13vh] items-center justify-between border-b border-gray-100 px-6">
           <a href="/" onClick={() => setIsOpen(false)}>
             <img
-              src="/images/mmspaint_logo.jpeg"
+              src="/images/logo.jpg"
               alt="MMSL Contracting logo"
               className="h-12 w-auto"
             />
