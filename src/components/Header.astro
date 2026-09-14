@@ -3,6 +3,21 @@ import { Image } from 'astro:assets'
 import MobileNav from './MobileNav'
 
 const logoSrc = '/images/logo.jpg'
+const pathname = Astro.url.pathname
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/#services', label: 'Services' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/contact', label: 'Contact' },
+]
+
+function isActive(href: string): boolean {
+  if (href === '/') return false
+  if (href.startsWith('/#')) return false
+  return pathname.startsWith(href)
+}
 ---
 
 <header class="fixed top-0 z-50 grid h-[13vh] w-screen place-items-center bg-white shadow-sm">
@@ -21,11 +36,16 @@ const logoSrc = '/images/logo.jpg'
       class="hidden gap-10 text-base font-medium text-gray-700 md:flex"
       aria-label="Main navigation"
     >
-      <a href="/" class="hover:underline">Home</a>
-      <a href="/about" class="hover:underline">About</a>
-      <a href="/#services" class="hover:underline">Services</a>
-      <a href="/portfolio" class="hover:underline">Portfolio</a>
-      <a href="/contact" class="hover:underline">Contact</a>
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={['nav-link relative py-1', { active: isActive(link.href) }]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
     </nav>
 
     <div class="hidden items-center gap-6 md:flex">
@@ -36,3 +56,48 @@ const logoSrc = '/images/logo.jpg'
     <MobileNav client:load />
   </div>
 </header>
+
+<style>
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #d1a333, #e3c972);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  .nav-link.active {
+    color: #08627c;
+  }
+</style>
+
+<script>
+  function updateActiveNavLink() {
+    const pathname = window.location.pathname
+    const hash = window.location.hash
+    const links = document.querySelectorAll('.nav-link')
+
+    links.forEach((link) => {
+      const href = link.getAttribute('href')
+      if (!href) return
+
+      const [linkPath, linkHash] = href.split('#')
+      const matchesPath = linkPath === '/' ? pathname === '/' : pathname.startsWith(linkPath)
+      const isActive = linkHash ? matchesPath && hash === `#${linkHash}` : matchesPath && !hash
+
+      link.classList.toggle('active', isActive)
+    })
+  }
+
+  window.addEventListener('hashchange', updateActiveNavLink)
+  document.addEventListener('astro:page-load', updateActiveNavLink)
+  updateActiveNavLink()
+</script>
