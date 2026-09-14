@@ -8,6 +8,15 @@ const rateLimit = new Map<string, { count: number; resetAt: number }>()
 const RATE_LIMIT_MAX = 3
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000 // 15 minutes
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
 function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
   const now = Date.now()
   const record = rateLimit.get(ip)
@@ -27,11 +36,17 @@ function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
 }
 
 const contactSchema = z.object({
-  fullName: z.string().min(2, 'Name must be at least 2 characters').max(100),
-  email: z.email('Please enter a valid email address'),
-  phone: z.string().optional(),
-  projectLocation: z.enum(['NYC', 'NJ', 'CJ']),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(2000),
+  fullName: z.string().trim().min(2, 'Name must be at least 2 characters').max(100),
+  email: z.preprocess(
+    (value) => (typeof value === 'string' ? value.trim() : value),
+    z.email('Please enter a valid email address')
+  ),
+  phone: z.string().trim().optional(),
+  projectLocation: z.preprocess(
+    (value) => (typeof value === 'string' ? value.trim() : value),
+    z.enum(['NYC', 'NJ', 'CJ'])
+  ),
+  message: z.string().trim().min(5, 'Message must be at least 10 characters').max(2000),
 })
 
 const locationLabels: Record<string, string> = {
@@ -42,6 +57,11 @@ const locationLabels: Record<string, string> = {
 
 function buildEmailHtml(data: z.infer<typeof contactSchema>) {
   const { fullName, email, phone, projectLocation, message } = data
+  const safeName = escapeHtml(fullName)
+  const safeEmail = escapeHtml(email)
+  const safePhone = phone ? escapeHtml(phone) : null
+  const safeLocation = escapeHtml(locationLabels[projectLocation] || projectLocation)
+  const safeMessage = escapeHtml(message)
 
   return `
 <!DOCTYPE html>
@@ -70,22 +90,22 @@ function buildEmailHtml(data: z.infer<typeof contactSchema>) {
                 <tr>
                   <td style="padding-bottom:20px;">
                     <p style="margin:0;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Name</p>
-                    <p style="margin:6px 0 0;font-size:15px;color:#111827;">${fullName}</p>
+                    <p style="margin:6px 0 0;font-size:15px;color:#111827;">${safeName}</p>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding-bottom:20px;">
                     <p style="margin:0;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Email</p>
-                    <p style="margin:6px 0 0;font-size:15px;color:#111827;"><a href="mailto:${email}" style="color:#08627C;text-decoration:none;">${email}</a></p>
+                    <p style="margin:6px 0 0;font-size:15px;color:#111827;"><a href="mailto:${safeEmail}" style="color:#08627C;text-decoration:none;">${safeEmail}</a></p>
                   </td>
                 </tr>
                 ${
-                  phone
+                  safePhone
                     ? `
                 <tr>
                   <td style="padding-bottom:20px;">
                     <p style="margin:0;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Phone</p>
-                    <p style="margin:6px 0 0;font-size:15px;color:#111827;"><a href="tel:${phone}" style="color:#08627C;text-decoration:none;">${phone}</a></p>
+                    <p style="margin:6px 0 0;font-size:15px;color:#111827;"><a href="tel:${safePhone}" style="color:#08627C;text-decoration:none;">${safePhone}</a></p>
                   </td>
                 </tr>`
                     : ''
@@ -93,14 +113,14 @@ function buildEmailHtml(data: z.infer<typeof contactSchema>) {
                 <tr>
                   <td style="padding-bottom:20px;">
                     <p style="margin:0;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Location</p>
-                    <p style="margin:6px 0 0;font-size:15px;color:#111827;">${locationLabels[projectLocation] || projectLocation}</p>
+                    <p style="margin:6px 0 0;font-size:15px;color:#111827;">${safeLocation}</p>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <p style="margin:0;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Message</p>
                     <div style="margin:8px 0 0;padding:16px;background-color:#f9fafb;border-radius:8px;border:1px solid #f0f0f0;">
-                      <p style="margin:0;font-size:14px;color:#374151;line-height:1.6;white-space:pre-wrap;">${message}</p>
+                      <p style="margin:0;font-size:14px;color:#374151;line-height:1.6;white-space:pre-wrap;">${safeMessage}</p>
                     </div>
                   </td>
                 </tr>
@@ -138,6 +158,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!result.success) {
       const firstError = result.error.issues[0]?.message || 'Validation failed'
+      console.warn('Contact form validation failed:', result.error.flatten().fieldErrors)
       return new Response(JSON.stringify({ success: false, error: firstError }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
