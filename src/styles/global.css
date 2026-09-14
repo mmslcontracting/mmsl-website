@@ -1,12 +1,12 @@
 @import 'tailwindcss';
-@import "tailwindcss-intersect";
-@import "tailwindcss-animated";
+@import 'tailwindcss-intersect';
+@import 'tailwindcss-animated';
 @import '@fontsource/poppins/400.css';
 @import '@fontsource/poppins/500.css';
 @import '@fontsource/poppins/600.css';
 @import '@fontsource/poppins/700.css';
 
-@plugin "@tailwindcss/typography";
+@plugin '@tailwindcss/typography';
 
 @font-face {
   font-family: 'Libre Baskerville';
@@ -37,13 +37,13 @@
 }
 
 @theme {
-  --color-primary: #08627C;
+  --color-primary: #08627c;
   --color-primary-dark: #065168;
   --color-primary-light: #0a7494;
   /* Extras */
-  --color-secondary: #E3C972;
-  --color-secondary-dark: #D1A333;
-  --color-accent: #E3C972; /* dorado para detalles elegantes */
+  --color-secondary: #e3c972;
+  --color-secondary-dark: #d1a333;
+  --color-accent: #e3c972; /* dorado para detalles elegantes */
   --color-muted: #6b7280; /* gris medio para texto secundario */
   --color-surface: #ebf1f7; /* fondo muy claro para secciones */
   --color-border: #e5e7eb; /* bordes sutiles */
@@ -79,15 +79,15 @@
 }
 
 @utility btn-primary {
-  @apply btn bg-primary text-white hover:bg-primary-dark active:bg-primary-light;
+  @apply btn bg-primary hover:bg-primary-dark active:bg-primary-light text-white;
 }
 
 @utility btn-secondary {
-  @apply btn bg-white text-primary border border-primary backdrop-blur-md;
+  @apply btn text-primary border-primary border bg-white backdrop-blur-md;
 }
 
 @utility btn-gold {
-  @apply btn bg-secondary text-gray-900 hover:bg-secondary-dark active:bg-secondary;
+  @apply btn bg-secondary hover:bg-secondary-dark active:bg-secondary text-gray-900;
 }
 
 /* Texto con degradado dorado */
@@ -100,7 +100,7 @@
 }
 
 @utility subtitle {
-  @apply mb-6 font-serif text-3xl md:text-4xl font-semibold;
+  @apply mb-6 font-serif text-3xl font-semibold md:text-4xl;
 }
 
 @utility first-section {
@@ -153,14 +153,14 @@ textarea {
     }
   }
 
-   @media (min-width: 828px) {
+  @media (min-width: 828px) {
     .container {
       padding-left: 30px;
       padding-right: 30px;
     }
   }
 
-   @media (min-width: 960px) {
+  @media (min-width: 960px) {
     .container {
       padding-left: 0;
       padding-right: 0;
@@ -181,7 +181,7 @@ textarea {
     }
   }
 
-    @media (min-width: 1250px) {
+  @media (min-width: 1250px) {
     .container {
       padding-left: 0;
       padding-right: 0;

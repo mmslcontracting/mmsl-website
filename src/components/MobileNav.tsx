@@ -109,7 +109,10 @@ export default function MobileNav() {
           </a>
           <p className="mt-4 text-center text-sm text-gray-500">
             Call us:{' '}
-            <a href="tel:+1-631-805-6259" className="hover:text-secondary font-medium text-gray-700">
+            <a
+              href="tel:+1-631-805-6259"
+              className="hover:text-secondary font-medium text-gray-700"
+            >
               (631) 805-6259
             </a>
           </p>

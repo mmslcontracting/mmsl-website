@@ -57,13 +57,17 @@ function buildEmailHtml(data: z.infer<typeof contactSchema>) {
                     <p style="margin:6px 0 0;font-size:15px;color:#111827;"><a href="mailto:${email}" style="color:#08627C;text-decoration:none;">${email}</a></p>
                   </td>
                 </tr>
-                ${phone ? `
+                ${
+                  phone
+                    ? `
                 <tr>
                   <td style="padding-bottom:20px;">
                     <p style="margin:0;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Phone</p>
                     <p style="margin:6px 0 0;font-size:15px;color:#111827;"><a href="tel:${phone}" style="color:#08627C;text-decoration:none;">${phone}</a></p>
                   </td>
-                </tr>` : ''}
+                </tr>`
+                    : ''
+                }
                 <tr>
                   <td style="padding-bottom:20px;">
                     <p style="margin:0;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Location</p>
@@ -134,9 +138,12 @@ export const POST: APIRoute = async ({ request }) => {
     })
   } catch (error) {
     console.error('Contact form error:', error)
-    return new Response(JSON.stringify({ success: false, error: 'Failed to send message. Please try again.' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return new Response(
+      JSON.stringify({ success: false, error: 'Failed to send message. Please try again.' }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
   }
 }
