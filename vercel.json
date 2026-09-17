@@ -1,0 +1,26 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.mmshomepaint.com"
+        }
+      ],
+      "destination": "https://www.mmslcontracting.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "mmshomepaint.com"
+        }
+      ],
+      "destination": "https://www.mmslcontracting.com/:path*",
+      "permanent": true
+    }
+  ]
+}

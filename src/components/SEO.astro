@@ -40,7 +40,7 @@ const {
 
 const pageTitle = title === siteName ? title : `${title} | ${siteName}`
 const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`
-const canonicalUrl = canonical || Astro.url.href
+const canonicalUrl = canonical || `${siteUrl}${Astro.url.pathname}`
 
 // JSON-LD Structured Data for Local Business
 const localBusinessSchema = {
@@ -53,7 +53,7 @@ const localBusinessSchema = {
   telephone: '+1-631-805-6259',
   email: 'contact@mmslcontracting.com',
   image: fullImageUrl,
-  logo: `${siteUrl}/images/mmspaint_logo.jpeg`,
+  logo: `${siteUrl}/images/logo.jpg`,
   openingHours: 'Mo-Fr 08:00-17:00',
   address: {
     '@type': 'PostalAddress',
@@ -141,7 +141,7 @@ const organizationSchema = {
   '@type': 'Organization',
   name: siteName,
   url: siteUrl,
-  logo: `${siteUrl}/images/mmspaint_logo.jpeg`,
+  logo: `${siteUrl}/images/logo.jpg`,
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: '+1-631-805-6259',
