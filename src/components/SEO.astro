@@ -9,14 +9,15 @@ export interface Props {
   noindex?: boolean
 }
 
-const siteName = 'MMSL Contracting'
+const siteName = 'MMSL Contracting Corp'
+const alternateName = 'MMSL Contracting'
 const siteUrl = 'https://www.mmslcontracting.com'
 const defaultImage = '/images/og-image.jpg'
 const twitterHandle = '@mmspaint'
 
 const {
   title = 'Home Renovation & Remodeling in NYC & NJ',
-  description = 'Premium home renovation & remodeling in NYC & NJ. Interior, exterior, kitchens, bathrooms & more. Get a free quote!',
+  description = 'MMSL Contracting Corp — Premium home renovation & remodeling in NYC & NJ. Interior, exterior, kitchens, bathrooms & more. Get a free quote!',
   keywords = [
     'painting services',
     'house painting',
@@ -30,6 +31,7 @@ const {
     'deck staining',
     'pressure washing',
     'home improvement',
+    'MMSL Contracting Corp',
     'MMSL Contracting',
   ],
   image = defaultImage,
@@ -48,6 +50,7 @@ const localBusinessSchema = {
   '@type': 'LocalBusiness',
   '@id': `${siteUrl}/#business`,
   name: siteName,
+  alternateName: alternateName,
   description: description,
   url: siteUrl,
   telephone: '+1-631-805-6259',
@@ -140,6 +143,8 @@ const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: siteName,
+  alternateName: alternateName,
+  legalName: siteName,
   url: siteUrl,
   logo: `${siteUrl}/images/logo.jpg`,
   contactPoint: {

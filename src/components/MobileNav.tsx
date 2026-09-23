@@ -77,7 +77,7 @@ export default function MobileNav() {
           <a href="/" onClick={() => setIsOpen(false)}>
             <img
               src="/images/logo.jpg"
-              alt="MMSL Contracting logo"
+              alt="MMSL Contracting Corp logo"
               className="h-12 w-auto"
             />
           </a>

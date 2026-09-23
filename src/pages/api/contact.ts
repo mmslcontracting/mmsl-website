@@ -131,7 +131,7 @@ function buildEmailHtml(data: z.infer<typeof contactSchema>) {
           <!-- Footer -->
           <tr>
             <td style="padding:20px 40px;border-top:1px solid #f0f0f0;">
-              <p style="margin:0;font-size:12px;color:#d1d5db;text-align:center;">MMSL Contracting · NYC & New Jersey</p>
+              <p style="margin:0;font-size:12px;color:#d1d5db;text-align:center;">MMSL Contracting Corp · NYC & New Jersey</p>
             </td>
           </tr>
         </table>
@@ -168,7 +168,7 @@ export const POST: APIRoute = async ({ request }) => {
     const { fullName, email, phone, projectLocation, message } = result.data
 
     await resend.emails.send({
-      from: 'MMSL Contracting <noreply@mmslcontracting.com>',
+      from: 'MMSL Contracting Corp <noreply@mmslcontracting.com>',
       to: 'contact@mmslcontracting.com',
       replyTo: email,
       subject: `New Contact: ${fullName} — ${locationLabels[projectLocation]}`,
