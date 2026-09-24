@@ -3,6 +3,7 @@ import Layout from '@/layouts/Layout.astro'
 import PortfolioGallery from '@/components/PortfolioGallery'
 import { Image } from 'astro:assets'
 import CTA from '@/components/CTA.astro'
+import { filters } from '@/data/portfolio'
 
 const seo = {
   title: 'Portfolio',
@@ -19,6 +20,10 @@ const seo = {
 }
 
 const heroImage = '/images/portfolio/wallpaper.jpeg'
+const requestedFilter = Astro.url.searchParams.get('filter')
+const initialFilter = filters.some((filter) => filter.id === requestedFilter)
+  ? requestedFilter!
+  : 'all'
 ---
 
 <Layout title={seo.title} description={seo.description} keywords={seo.keywords}>
@@ -48,6 +53,6 @@ const heroImage = '/images/portfolio/wallpaper.jpeg'
     </div>
   </section>
 
-  <PortfolioGallery client:visible />
+  <PortfolioGallery client:visible initialFilter={initialFilter} />
   <CTA />
 </Layout>

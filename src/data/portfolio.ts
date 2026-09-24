@@ -6,6 +6,7 @@ export interface PortfolioCategory {
 
 export interface PortfolioItem {
   src: string
+  poster?: string
   category: string
   label: string
   title: string
@@ -22,7 +23,8 @@ export const categories: PortfolioCategory[] = [
   {
     id: 'exterior',
     label: 'Exterior',
-    description: 'Facades and patios with contemporary lines, landscaping, and sculptural finishes.',
+    description:
+      'Facades and patios with contemporary lines, landscaping, and sculptural finishes.',
   },
   {
     id: 'bathroom',
@@ -40,7 +42,7 @@ const makeTitle = (categoryId: string, index: number, isVideo: boolean) => {
 }
 
 function buildItems(): PortfolioItem[] {
-  const sources: { category: string; src: string }[] = [
+  const sources: { category: string; src: string; poster?: string }[] = [
     { category: 'interior', src: '/images/portfolio/interior/1.jpeg' },
     { category: 'interior', src: '/images/portfolio/interior/2.jpeg' },
     { category: 'exterior', src: '/images/portfolio/exterior/1.jpeg' },
@@ -61,12 +63,28 @@ function buildItems(): PortfolioItem[] {
     { category: 'bathroom', src: '/images/portfolio/bathroom/4.jpeg' },
     { category: 'bathroom', src: '/images/portfolio/bathroom/5.jpeg' },
     { category: 'bathroom', src: '/images/portfolio/bathroom/6.jpeg' },
-    { category: 'bathroom', src: '/images/portfolio/videos/1.mp4' },
-    { category: 'bathroom', src: '/images/portfolio/videos/4.mp4' },
+    {
+      category: 'bathroom',
+      src: '/images/portfolio/videos/1.mp4',
+      poster: '/images/portfolio/bathroom/6.jpeg',
+    },
+    {
+      category: 'bathroom',
+      src: '/images/portfolio/videos/4.mp4',
+      poster: '/images/portfolio/bathroom/7.jpeg',
+    },
     { category: 'bathroom', src: '/images/portfolio/bathroom/7.jpeg' },
     { category: 'bathroom', src: '/images/portfolio/bathroom/8.jpeg' },
-    { category: 'bathroom', src: '/images/portfolio/videos/2.mp4' },
-    { category: 'bathroom', src: '/images/portfolio/videos/3.mp4' },
+    {
+      category: 'bathroom',
+      src: '/images/portfolio/videos/2.mp4',
+      poster: '/images/portfolio/bathroom/8.jpeg',
+    },
+    {
+      category: 'bathroom',
+      src: '/images/portfolio/videos/3.mp4',
+      poster: '/images/portfolio/bathroom/9.jpeg',
+    },
     { category: 'bathroom', src: '/images/portfolio/bathroom/9.jpeg' },
     { category: 'bathroom', src: '/images/portfolio/bathroom/10.jpeg' },
     { category: 'bathroom', src: '/images/portfolio/bathroom/11.jpeg' },
@@ -75,15 +93,16 @@ function buildItems(): PortfolioItem[] {
 
   const counters: Record<string, number> = {}
 
-  return sources.map(({ category, src }) => {
+  return sources.map(({ category, src, poster }) => {
     const isVideo = src.toLowerCase().endsWith('.mp4')
     const n = counters[category] ?? 0
     counters[category] = n + 1
     const label = categoryLabel(category)
     const title = makeTitle(category, n, isVideo)
-    
+
     return {
       src,
+      poster,
       category,
       label,
       title,
