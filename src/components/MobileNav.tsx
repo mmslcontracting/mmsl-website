@@ -105,7 +105,7 @@ export default function MobileNav() {
             onClick={() => setIsOpen(false)}
             className="btn-gold block w-full rounded-lg px-6 py-3 text-center text-base font-semibold text-gray-900 transition"
           >
-            Get Free Quote
+            Get Quote
           </a>
           <p className="mt-4 text-center text-sm text-gray-500">
             Call us:{' '}

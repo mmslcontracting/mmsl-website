@@ -172,7 +172,11 @@ export default function PortfolioGallery({ initialFilter = 'all' }: PortfolioGal
   const currentImage = filteredItems[currentIndex]
 
   return (
-    <section className="bg-surface py-14 sm:py-20" aria-label="Project gallery">
+    <section
+      id="portfolio-gallery"
+      className="bg-surface scroll-mt-[13vh] py-14 sm:py-20"
+      aria-label="Project gallery"
+    >
       <div className="container mx-auto px-5">
         <div className="mx-auto max-w-3xl pb-8 text-center">
           <p className="text-sm font-semibold tracking-[0.4em] text-gray-500 uppercase">Our Work</p>
