@@ -22,15 +22,31 @@ import exterior4 from '@/assets/images/portfolio/exterior/4.jpeg'
 import exterior5 from '@/assets/images/portfolio/exterior/5.jpeg'
 import interior1 from '@/assets/images/portfolio/interior/1.jpeg'
 import interior2 from '@/assets/images/portfolio/interior/2.jpeg'
+import parkSlopeBlackFixtures from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-black-fixtures-overview.jpeg'
+import parkSlopeBrassFixtures from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-brass-fixtures-overview.jpeg'
+import parkSlopeBrassVanity from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-brass-vanity.jpeg'
+import parkSlopeBathtub from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-bathtub-overview.jpeg'
+import parkSlopeGeometricVanity from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-geometric-tile-vanity.jpeg'
+import parkSlopeGlassShower from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-glass-shower-entry.jpeg'
+import parkSlopeHexFloor from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-hex-floor-details.jpeg'
+import parkSlopePatternedFloor from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-patterned-tile-floor.jpeg'
+import parkSlopeRainShower from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-rain-shower-details.jpeg'
+import parkSlopeSkylight from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-skylight-overview.jpeg'
+import parkSlopeWainscoting from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-wainscoting-details.jpeg'
+import parkSlopeVideo1 from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-walkthrough-01.mp4?url'
+import parkSlopeVideo2 from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-walkthrough-02.mp4?url'
 import video1 from '@/assets/images/portfolio/videos/1.mp4?url'
 import video2 from '@/assets/images/portfolio/videos/2.mp4?url'
 import video3 from '@/assets/images/portfolio/videos/3.mp4?url'
 import video4 from '@/assets/images/portfolio/videos/4.mp4?url'
 
-export interface PortfolioCategory {
+export type PortfolioFilterGroup = 'overview' | 'category' | 'project'
+
+export interface PortfolioFilter {
   id: string
   label: string
   description: string
+  group: PortfolioFilterGroup
 }
 
 export interface PortfolioItem {
@@ -38,7 +54,7 @@ export interface PortfolioItem {
   poster?: string
   width?: number
   height?: number
-  category: string
+  filterIds: string[]
   label: string
   title: string
   alt: string
@@ -50,107 +66,217 @@ export interface PortfolioItemSource extends Omit<PortfolioItem, 'src' | 'poster
   poster?: ImageMetadata
 }
 
-export const categories: PortfolioCategory[] = [
+interface PortfolioSource {
+  src: ImageMetadata | string
+  poster?: ImageMetadata
+  type: 'image' | 'video'
+  categoryId: string
+  projectId?: string
+  alt?: string
+}
+
+export const categories: PortfolioFilter[] = [
   {
     id: 'interior',
     label: 'Interior',
     description: 'Warm living spaces with natural materials, soft lighting, and textile details.',
+    group: 'category',
   },
   {
     id: 'exterior',
     label: 'Exterior',
     description:
       'Facades and patios with contemporary lines, landscaping, and sculptural finishes.',
+    group: 'category',
   },
   {
     id: 'bathroom',
     label: 'Bathroom',
-    description: 'Spa-like bathrooms with marble, brushed metal, and soft light details.',
+    description: 'Bathroom renovations with considered materials, fixtures, and custom details.',
+    group: 'category',
   },
 ]
 
-const categoryLabel = (id: string) => categories.find((c) => c.id === id)?.label ?? id
+export const projects: PortfolioFilter[] = [
+  {
+    id: 'park-slope-brooklyn-ny',
+    label: 'Park Slope, Brooklyn, NY',
+    description:
+      'Three distinctive bathroom renovations completed in Park Slope, Brooklyn, New York.',
+    group: 'project',
+  },
+]
 
-const makeTitle = (categoryId: string, index: number, isVideo: boolean) => {
-  const label = categoryLabel(categoryId)
-  const kind = isVideo ? 'Walkthrough' : 'Remodel'
-  return `${label} ${kind} ${index + 1}`
+const allFilter: PortfolioFilter = {
+  id: 'all',
+  label: 'All Work',
+  description: 'Browse all completed renovations across NYC and New Jersey.',
+  group: 'overview',
 }
 
+export const filters: PortfolioFilter[] = [allFilter, ...categories, ...projects]
+
+const categoryById = new Map(categories.map((category) => [category.id, category]))
+const projectById = new Map(projects.map((project) => [project.id, project]))
+
+const sources: PortfolioSource[] = [
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeBlackFixtures,
+    type: 'image',
+    alt: 'Renovated Park Slope bathroom with black fixtures, glass shower, and hex tile floor',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeGlassShower,
+    type: 'image',
+    alt: 'Glass shower enclosure and restored woodwork in a Park Slope bathroom renovation',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeRainShower,
+    type: 'image',
+    alt: 'Black rain shower, built-in niche, and wood shelving in a Park Slope bathroom',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeBrassFixtures,
+    type: 'image',
+    alt: 'Park Slope bathroom with brass fixtures, dark walls, and patterned tile floor',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeBrassVanity,
+    type: 'image',
+    alt: 'Black vanity with brass fixtures and oval mirror in a Park Slope bathroom',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopePatternedFloor,
+    type: 'image',
+    alt: 'Geometric black and white tile floor in a renovated Park Slope bathroom',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeWainscoting,
+    type: 'image',
+    alt: 'White wainscoting and brass towel rail in a Park Slope bathroom renovation',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeGeometricVanity,
+    type: 'image',
+    alt: 'Compact white vanity and geometric wall tile in a Park Slope bathroom renovation',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeSkylight,
+    type: 'image',
+    alt: 'Park Slope bathroom with skylight, geometric wall tile, and gray hex floor tile',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeHexFloor,
+    type: 'image',
+    alt: 'Gray hex floor tile, white vanity, and bathtub in a renovated Park Slope bathroom',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeBathtub,
+    type: 'image',
+    alt: 'Bathtub and geometric wall tile in a bright Park Slope bathroom renovation',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeVideo1,
+    poster: parkSlopeBlackFixtures,
+    type: 'video',
+    alt: 'Video walkthrough of the Park Slope bathroom renovation with black fixtures',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'park-slope-brooklyn-ny',
+    src: parkSlopeVideo2,
+    poster: parkSlopeBrassFixtures,
+    type: 'video',
+    alt: 'Video walkthrough of the Park Slope bathroom renovation with brass fixtures',
+  },
+  { categoryId: 'interior', src: interior1, type: 'image' },
+  { categoryId: 'interior', src: interior2, type: 'image' },
+  { categoryId: 'exterior', src: exterior1, type: 'image' },
+  { categoryId: 'exterior', src: exterior2Alt, type: 'image' },
+  { categoryId: 'exterior', src: exterior2, type: 'image' },
+  { categoryId: 'exterior', src: exterior3, type: 'image' },
+  { categoryId: 'exterior', src: exterior4, type: 'image' },
+  { categoryId: 'exterior', src: exterior5, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom1, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom1Alt, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom2, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom2Alt, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom2Detail, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom3, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom4, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom5, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom6, type: 'image' },
+  { categoryId: 'bathroom', src: video1, poster: bathroom6, type: 'video' },
+  { categoryId: 'bathroom', src: video4, poster: bathroom7, type: 'video' },
+  { categoryId: 'bathroom', src: bathroom7, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom8, type: 'image' },
+  { categoryId: 'bathroom', src: video2, poster: bathroom8, type: 'video' },
+  { categoryId: 'bathroom', src: video3, poster: bathroom9, type: 'video' },
+  { categoryId: 'bathroom', src: bathroom9, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom10, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom11, type: 'image' },
+  { categoryId: 'bathroom', src: bathroom12, type: 'image' },
+]
+
 function buildItems(): PortfolioItemSource[] {
-  const sources: { category: string; src: ImageMetadata | string; poster?: ImageMetadata }[] = [
-    { category: 'interior', src: interior1 },
-    { category: 'interior', src: interior2 },
-    { category: 'exterior', src: exterior1 },
-    {
-      category: 'exterior',
-      src: exterior2Alt,
-    },
-    { category: 'exterior', src: exterior2 },
-    { category: 'exterior', src: exterior3 },
-    { category: 'exterior', src: exterior4 },
-    { category: 'exterior', src: exterior5 },
-    { category: 'bathroom', src: bathroom1 },
-    { category: 'bathroom', src: bathroom1Alt },
-    { category: 'bathroom', src: bathroom2 },
-    { category: 'bathroom', src: bathroom2Alt },
-    { category: 'bathroom', src: bathroom2Detail },
-    { category: 'bathroom', src: bathroom3 },
-    { category: 'bathroom', src: bathroom4 },
-    { category: 'bathroom', src: bathroom5 },
-    { category: 'bathroom', src: bathroom6 },
-    {
-      category: 'bathroom',
-      src: video1,
-      poster: bathroom6,
-    },
-    {
-      category: 'bathroom',
-      src: video4,
-      poster: bathroom7,
-    },
-    { category: 'bathroom', src: bathroom7 },
-    { category: 'bathroom', src: bathroom8 },
-    {
-      category: 'bathroom',
-      src: video2,
-      poster: bathroom8,
-    },
-    {
-      category: 'bathroom',
-      src: video3,
-      poster: bathroom9,
-    },
-    { category: 'bathroom', src: bathroom9 },
-    { category: 'bathroom', src: bathroom10 },
-    { category: 'bathroom', src: bathroom11 },
-    { category: 'bathroom', src: bathroom12 },
-  ]
+  const categoryCounters: Record<string, number> = {}
 
-  const counters: Record<string, number> = {}
+  return sources.map(({ categoryId, projectId, src, poster, type, alt }) => {
+    const category = categoryById.get(categoryId)
+    const project = projectId ? projectById.get(projectId) : undefined
+    const categoryLabel = category?.label ?? categoryId
+    const filterIds = projectId ? [categoryId, projectId] : [categoryId]
 
-  return sources.map(({ category, src, poster }) => {
-    const isVideo = typeof src === 'string'
-    const n = counters[category] ?? 0
-    counters[category] = n + 1
-    const label = categoryLabel(category)
-    const title = makeTitle(category, n, isVideo)
+    if (project) {
+      return {
+        src,
+        poster,
+        filterIds,
+        label: categoryLabel,
+        title: project.label,
+        alt: alt ?? `${project.label} ${categoryLabel.toLowerCase()} renovation by MMSL`,
+        type,
+      }
+    }
+
+    const index = categoryCounters[categoryId] ?? 0
+    categoryCounters[categoryId] = index + 1
+    const title = `${categoryLabel} ${type === 'video' ? 'Walkthrough' : 'Remodel'} ${index + 1}`
 
     return {
       src,
       poster,
-      category,
-      label,
+      filterIds,
+      label: categoryLabel,
       title,
-      alt: `${title} by MMSL Contracting Corp in NYC / NJ`,
-      type: isVideo ? 'video' : 'image',
+      alt: alt ?? `${title} by MMSL Contracting Corp in NYC and New Jersey`,
+      type,
     }
   })
 }
 
 export const galleryItems: PortfolioItemSource[] = buildItems()
-
-export const filters = [
-  { id: 'all', label: 'All Projects' },
-  ...categories.map((category) => ({ id: category.id, label: category.label })),
-]

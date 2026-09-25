@@ -6,7 +6,6 @@ import type { ImageMetadata } from 'astro'
 import CTA from '@/components/CTA.astro'
 import portfolioHero from '@/assets/images/portfolio/wallpaper.jpeg'
 import {
-  categories,
   filters,
   galleryItems,
   type PortfolioItem,
@@ -118,7 +117,6 @@ const optimizedGalleryItems = await Promise.all(galleryItems.map(optimizePortfol
     client:visible
     initialFilter={initialFilter}
     items={optimizedGalleryItems}
-    categories={categories}
     filters={filters}
   />
   <CTA />

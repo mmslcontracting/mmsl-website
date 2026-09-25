@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { PortfolioCategory, PortfolioItem } from '@/data/portfolio'
+import type { PortfolioFilter, PortfolioItem } from '@/data/portfolio'
 
 function getFilterFromUrl(validFilters: Set<string>): string {
   if (typeof window === 'undefined') return 'all'
@@ -10,14 +10,12 @@ function getFilterFromUrl(validFilters: Set<string>): string {
 interface PortfolioGalleryProps {
   initialFilter?: string
   items: PortfolioItem[]
-  categories: PortfolioCategory[]
-  filters: { id: string; label: string }[]
+  filters: PortfolioFilter[]
 }
 
 export default function PortfolioGallery({
   initialFilter = 'all',
   items: galleryItems,
-  categories,
   filters,
 }: PortfolioGalleryProps) {
   const validFilters = useMemo(() => new Set(filters.map((filter) => filter.id)), [filters])
@@ -36,20 +34,31 @@ export default function PortfolioGallery({
   const counts = useMemo(() => {
     const map: Record<string, number> = { all: galleryItems.length }
     for (const item of galleryItems) {
-      map[item.category] = (map[item.category] ?? 0) + 1
+      for (const filterId of item.filterIds) {
+        map[filterId] = (map[filterId] ?? 0) + 1
+      }
     }
     return map
-  }, [])
+  }, [galleryItems])
 
   const activeDescription = useMemo(() => {
-    if (activeFilter === 'all') return 'Browse all completed renovations across NYC & New Jersey.'
-    return categories.find((c) => c.id === activeFilter)?.description ?? ''
-  }, [activeFilter])
+    return filters.find((filter) => filter.id === activeFilter)?.description ?? ''
+  }, [activeFilter, filters])
 
   const filteredItems = useMemo(() => {
     if (activeFilter === 'all') return galleryItems
-    return galleryItems.filter((item) => item.category === activeFilter)
-  }, [activeFilter])
+    return galleryItems.filter((item) => item.filterIds.includes(activeFilter))
+  }, [activeFilter, galleryItems])
+
+  const categoryFilters = useMemo(
+    () => filters.filter((filter) => filter.group === 'category'),
+    [filters]
+  )
+  const projectFilters = useMemo(
+    () => filters.filter((filter) => filter.group === 'project'),
+    [filters]
+  )
+  const allFilter = filters.find((filter) => filter.group === 'overview')
 
   const scrollToGalleryStart = (focusFirstProject = false) => {
     requestAnimationFrame(() => {
@@ -178,6 +187,39 @@ export default function PortfolioGallery({
 
   const currentImage = filteredItems[currentIndex]
 
+  const renderFilter = (filter: PortfolioFilter) => {
+    const isActive = activeFilter === filter.id
+
+    return (
+      <button
+        key={filter.id}
+        type="button"
+        aria-pressed={isActive}
+        onClick={(event) => selectFilter(filter.id, event.detail === 0)}
+        className={`focus-visible:ring-primary flex min-h-11 cursor-pointer touch-manipulation items-center justify-between gap-3 rounded-full border px-4 py-2.5 text-left text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:rounded-2xl ${
+          isActive
+            ? 'border-primary bg-primary text-white shadow-md'
+            : 'hover:border-primary/50 border-black/10 bg-white text-gray-700 hover:bg-gray-50'
+        }`}
+      >
+        <span className="flex items-center gap-2">
+          <span
+            aria-hidden="true"
+            className={`h-2 w-2 shrink-0 rounded-full ${isActive ? 'bg-white' : 'bg-primary/40'}`}
+          />
+          {filter.label}
+        </span>
+        <span
+          className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-bold ${
+            isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600'
+          }`}
+        >
+          {counts[filter.id] ?? 0}
+        </span>
+      </button>
+    )
+  }
+
   return (
     <section
       id="portfolio-gallery"
@@ -195,46 +237,32 @@ export default function PortfolioGallery({
             <div
               className="rounded-3xl border border-gray-200 bg-white p-4 shadow-sm lg:p-5"
               role="group"
-              aria-label="Filter projects by category"
+              aria-label="Filter portfolio work"
             >
               <p className="px-1 text-xs font-bold tracking-[0.3em] text-gray-500 uppercase">
+                Browse by
+              </p>
+              <div className="mt-3 flex flex-wrap gap-3 lg:flex-col lg:items-stretch">
+                {allFilter && renderFilter(allFilter)}
+              </div>
+
+              <p className="mt-6 px-1 text-xs font-bold tracking-[0.3em] text-gray-500 uppercase">
                 Categories
               </p>
               <div className="mt-3 flex flex-wrap gap-3 lg:flex-col lg:items-stretch">
-                {filters.map((filter) => {
-                  const isActive = activeFilter === filter.id
-                  return (
-                    <button
-                      key={filter.id}
-                      type="button"
-                      aria-pressed={isActive}
-                      onClick={(event) => selectFilter(filter.id, event.detail === 0)}
-                      className={`focus-visible:ring-primary flex min-h-11 cursor-pointer touch-manipulation items-center justify-between gap-3 rounded-full border px-4 py-2.5 text-left text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:rounded-2xl ${
-                        isActive
-                          ? 'border-primary bg-primary text-white shadow-md'
-                          : 'hover:border-primary/50 border-black/10 bg-white text-gray-700 hover:bg-gray-50'
-                      }`}
-                    >
-                      <span className="flex items-center gap-2">
-                        <span
-                          aria-hidden="true"
-                          className={`h-2 w-2 rounded-full ${
-                            isActive ? 'bg-white' : 'bg-primary/40'
-                          }`}
-                        />
-                        {filter.label}
-                      </span>
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-bold ${
-                          isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600'
-                        }`}
-                      >
-                        {counts[filter.id] ?? 0}
-                      </span>
-                    </button>
-                  )
-                })}
+                {categoryFilters.map(renderFilter)}
               </div>
+
+              {projectFilters.length > 0 && (
+                <>
+                  <p className="mt-6 px-1 text-xs font-bold tracking-[0.3em] text-gray-500 uppercase">
+                    Projects
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-3 lg:flex-col lg:items-stretch">
+                    {projectFilters.map(renderFilter)}
+                  </div>
+                </>
+              )}
             </div>
           </aside>
 
@@ -307,7 +335,7 @@ export default function PortfolioGallery({
                         </p>
                       </div>
                       <span className="shrink-0 rounded-full bg-black/35 px-3 py-1 text-xs font-semibold opacity-100 backdrop-blur-sm transition-opacity duration-300 motion-reduce:transition-none md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100">
-                        View →
+                        View project →
                       </span>
                     </div>
                   </button>
