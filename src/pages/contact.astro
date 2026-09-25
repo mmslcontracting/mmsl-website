@@ -18,11 +18,12 @@ const seo = {
 ---
 
 <Layout title={seo.title} description={seo.description} keywords={seo.keywords}>
-
   <!-- Hero Section -->
   <section class="first-section py-16" style="background-color:var(--color-surface)">
     <div class="mx-auto max-w-7xl px-6 text-center">
-      <h1 class="font-serif text-4xl text-gray-900 md:text-5xl"><span class="sr-only">MMSL Contracting Corp — </span>Contact Us</h1>
+      <h1 class="font-serif text-4xl text-gray-900 md:text-5xl">
+        <span class="sr-only">MMSL Contracting Corp — </span>Contact Us
+      </h1>
       <p class="mx-auto mt-4 max-w-2xl text-gray-600">
         Ready to transform your space? Get in touch with our team — we serve New York City · North
         Jersey · Central Jersey.
@@ -35,13 +36,13 @@ const seo = {
     <div class="mx-auto max-w-7xl px-6">
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
         <!-- Left: Contact Form -->
-        <div class="animate-fade-right">
+        <div class="animate-fade-up">
           <h2 class="mb-6 font-serif text-2xl text-gray-900">Send us a message</h2>
           <ContactForm client:visible />
         </div>
 
         <!-- Right: Contact Info & Map -->
-        <div class="animate-fade-left">
+        <div class="animate-fade-up">
           <h2 class="mb-6 font-serif text-2xl text-gray-900">Get in touch</h2>
 
           <div class="mb-8 space-y-6">
