@@ -242,7 +242,7 @@ export default function PortfolioGallery({
         type="button"
         aria-pressed={isActive}
         onClick={(event) => selectFilter(filter.id, event.detail === 0)}
-        className={`focus-visible:ring-primary flex min-h-9 cursor-pointer touch-manipulation items-center justify-between gap-2 rounded-full border px-3 py-1 text-left text-sm leading-tight font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:rounded-xl ${
+        className={`focus-visible:ring-primary flex min-h-10 cursor-pointer touch-manipulation items-center justify-between gap-2 rounded-full border px-3 py-1.5 text-left text-sm leading-tight font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:rounded-xl ${
           isActive
             ? 'border-primary bg-primary text-white shadow-md'
             : 'hover:border-primary/50 border-black/10 bg-white text-gray-700 hover:bg-gray-50'
@@ -327,33 +327,24 @@ export default function PortfolioGallery({
                     onClick={() => openModal(index)}
                   >
                     {isVideo ? (
-                      <div className="h-64 w-full">
-                        <video
-                          src={item.src}
-                          poster={item.poster}
-                          aria-label={item.alt}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 group-focus-visible:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
-                          muted
-                          loop
-                          playsInline
-                          preload="none"
-                          onMouseEnter={(event) => {
-                            if (
-                              window.matchMedia(
-                                '(hover: hover) and (prefers-reduced-motion: no-preference)'
-                              ).matches
-                            ) {
-                              event.currentTarget.play().catch(() => {})
-                            }
-                          }}
-                          onMouseLeave={(event) => {
-                            event.currentTarget.pause()
-                            try {
-                              event.currentTarget.currentTime = 0
-                            } catch {}
-                          }}
+                      item.poster ? (
+                        <img
+                          src={item.poster}
+                          alt={item.alt}
+                          className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105 group-focus-visible:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
+                          loading="lazy"
+                          decoding="async"
                         />
-                      </div>
+                      ) : (
+                        <div
+                          className="flex h-64 w-full items-center justify-center bg-linear-to-br from-gray-700 to-gray-950 text-white"
+                          aria-hidden="true"
+                        >
+                          <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/50 bg-black/25 text-2xl backdrop-blur-sm">
+                            ▶
+                          </span>
+                        </div>
+                      )
                     ) : (
                       <img
                         src={item.src}
@@ -490,7 +481,7 @@ export default function PortfolioGallery({
       {isModalOpen && currentImage && (
         <div
           ref={dialogRef}
-          className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-black/85 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-black/90 p-4"
           role="dialog"
           aria-modal="true"
           aria-label={`${currentImage.title} — ${currentImage.label}`}
@@ -528,15 +519,15 @@ export default function PortfolioGallery({
               )}
               {currentImage.type === 'video' ? (
                 <video
+                  key={currentImage.src}
                   src={currentImage.src}
                   poster={currentImage.poster}
                   aria-label={currentImage.alt}
-                  className="h-full max-h-[75vh] max-w-[90vw] rounded-xl object-contain"
+                  className="block h-auto max-h-[75svh] w-auto max-w-[90vw] rounded-xl bg-black object-contain"
                   controls
-                  autoPlay
                   playsInline
                   preload="metadata"
-                  onLoadedData={() => setMediaStatus('ready')}
+                  onCanPlay={() => setMediaStatus('ready')}
                   onError={() => setMediaStatus('error')}
                 />
               ) : (
