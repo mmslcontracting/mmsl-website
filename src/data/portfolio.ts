@@ -22,6 +22,17 @@ import exterior4 from '@/assets/images/portfolio/exterior/4.jpeg'
 import exterior5 from '@/assets/images/portfolio/exterior/5.jpeg'
 import interior1 from '@/assets/images/portfolio/interior/1.jpeg'
 import interior2 from '@/assets/images/portfolio/interior/2.jpeg'
+import cobbleHillVideo from '@/assets/images/portfolio/cobble-hill-brooklyn-ny/cobble-hill-interior-painting-walkthrough.mp4?url'
+import greatNeckBathroomDoorway from '@/assets/images/portfolio/great-neck-ny/great-neck-bathroom-doorway-overview.jpeg'
+import greatNeckBathroomVanity from '@/assets/images/portfolio/great-neck-ny/great-neck-bathroom-vanity-shower.jpeg'
+import greatNeckBedroomClosets from '@/assets/images/portfolio/great-neck-ny/great-neck-bedroom-custom-closets.jpeg'
+import greatNeckBedroomFloor from '@/assets/images/portfolio/great-neck-ny/great-neck-bedroom-hardwood-floor.jpeg'
+import greatNeckBedroomOpenClosets from '@/assets/images/portfolio/great-neck-ny/great-neck-bedroom-open-closets.jpeg'
+import greatNeckHallwayClosets from '@/assets/images/portfolio/great-neck-ny/great-neck-custom-hallway-closets.jpeg'
+import greatNeckKitchen from '@/assets/images/portfolio/great-neck-ny/great-neck-galley-kitchen.jpeg'
+import greatNeckHallwaySlidingClosets from '@/assets/images/portfolio/great-neck-ny/great-neck-hallway-sliding-closets.jpeg'
+import greatNeckFloorDetail from '@/assets/images/portfolio/great-neck-ny/great-neck-hardwood-floor-detail.jpeg'
+import greatNeckVideo from '@/assets/images/portfolio/great-neck-ny/great-neck-apartment-renovation-walkthrough.mp4?url'
 import parkSlopeBlackFixtures from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-black-fixtures-overview.jpeg'
 import parkSlopeBrassFixtures from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-brass-fixtures-overview.jpeg'
 import parkSlopeBrassVanity from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-brass-vanity.jpeg'
@@ -105,6 +116,19 @@ export const projects: PortfolioFilter[] = [
       'Three distinctive bathroom renovations completed in Park Slope, Brooklyn, New York.',
     group: 'project',
   },
+  {
+    id: 'great-neck-ny',
+    label: 'Great Neck, NY',
+    description:
+      'A complete apartment renovation with a new kitchen, bathroom, hardwood floors, and custom storage.',
+    group: 'project',
+  },
+  {
+    id: 'cobble-hill-brooklyn-ny',
+    label: 'Cobble Hill, Brooklyn, NY',
+    description: 'Interior painting completed for a residence in Cobble Hill, Brooklyn, New York.',
+    group: 'project',
+  },
 ]
 
 const allFilter: PortfolioFilter = {
@@ -120,6 +144,84 @@ const categoryById = new Map(categories.map((category) => [category.id, category
 const projectById = new Map(projects.map((project) => [project.id, project]))
 
 const sources: PortfolioSource[] = [
+  {
+    categoryId: 'interior',
+    projectId: 'great-neck-ny',
+    src: greatNeckKitchen,
+    type: 'image',
+    alt: 'Renovated galley kitchen with custom wood cabinetry in Great Neck, New York',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'great-neck-ny',
+    src: greatNeckBathroomVanity,
+    type: 'image',
+    alt: 'Great Neck bathroom with wood vanity, glass shower door, and black fixtures',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'great-neck-ny',
+    src: greatNeckBathroomDoorway,
+    type: 'image',
+    alt: 'Completed Great Neck bathroom renovation viewed from the doorway',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'great-neck-ny',
+    src: greatNeckBedroomClosets,
+    type: 'image',
+    alt: 'Great Neck bedroom with refinished hardwood floor and custom white closets',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'great-neck-ny',
+    src: greatNeckBedroomOpenClosets,
+    type: 'image',
+    alt: 'Custom sliding closet and storage system in a renovated Great Neck bedroom',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'great-neck-ny',
+    src: greatNeckBedroomFloor,
+    type: 'image',
+    alt: 'Refinished hardwood floor in a bright Great Neck bedroom renovation',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'great-neck-ny',
+    src: greatNeckFloorDetail,
+    type: 'image',
+    alt: 'Detailed view of refinished hardwood flooring in the Great Neck apartment',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'great-neck-ny',
+    src: greatNeckHallwayClosets,
+    type: 'image',
+    alt: 'Great Neck hallway with custom wood-panel sliding closets and hardwood flooring',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'great-neck-ny',
+    src: greatNeckHallwaySlidingClosets,
+    type: 'image',
+    alt: 'Open custom sliding closets along a renovated Great Neck hallway',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'great-neck-ny',
+    src: greatNeckVideo,
+    poster: greatNeckKitchen,
+    type: 'video',
+    alt: 'Video walkthrough of the completed Great Neck apartment renovation',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'cobble-hill-brooklyn-ny',
+    src: cobbleHillVideo,
+    type: 'video',
+    alt: 'Video walkthrough of an interior painting project in Cobble Hill, Brooklyn',
+  },
   {
     categoryId: 'bathroom',
     projectId: 'park-slope-brooklyn-ny',
