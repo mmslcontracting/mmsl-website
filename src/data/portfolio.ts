@@ -33,6 +33,18 @@ import greatNeckKitchen from '@/assets/images/portfolio/great-neck-ny/great-neck
 import greatNeckHallwaySlidingClosets from '@/assets/images/portfolio/great-neck-ny/great-neck-hallway-sliding-closets.jpeg'
 import greatNeckFloorDetail from '@/assets/images/portfolio/great-neck-ny/great-neck-hardwood-floor-detail.jpeg'
 import greatNeckVideo from '@/assets/images/portfolio/great-neck-ny/great-neck-apartment-renovation-walkthrough.mp4?url'
+import lafayetteBathroomShower from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-bathroom-shower-detail.jpg'
+import lafayetteBathroomTub from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-bathroom-tub-shower.jpg'
+import lafayetteBathroomVanity from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-bathroom-vanity-overview.jpg'
+import lafayetteBathroomVideo from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-bathroom-walkthrough.mp4?url'
+import lafayetteKitchen from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-custom-kitchen-entry.jpg'
+import lafayetteDiningDivider from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-dining-room-divider.jpg'
+import lafayetteEntryMillwork from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-entry-hall-millwork.jpg'
+import lafayetteGrayCabinetry from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-gray-built-in-cabinetry.jpg'
+import lafayetteLivingRoom from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-living-room-city-windows.jpg'
+import lafayetteOpenPlan from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-open-plan-kitchen-dining.jpg'
+import lafayettePinkBuiltIn from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-pink-custom-built-in.jpg'
+import lafayetteRoomDivider from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-wood-glass-room-divider.jpg'
 import parkSlopeBlackFixtures from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-black-fixtures-overview.jpeg'
 import parkSlopeBrassFixtures from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-brass-fixtures-overview.jpeg'
 import parkSlopeBrassVanity from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-brass-vanity.jpeg'
@@ -110,6 +122,13 @@ export const categories: PortfolioFilter[] = [
 
 export const projects: PortfolioFilter[] = [
   {
+    id: 'lafayette-residence-nyc',
+    label: 'Lafayette, NYC',
+    description:
+      'A featured full-apartment renovation with an open kitchen, custom millwork, refined living spaces, and a complete bathroom remodel.',
+    group: 'project',
+  },
+  {
     id: 'park-slope-brooklyn-ny',
     label: 'Park Slope, Brooklyn, NY',
     description:
@@ -144,6 +163,91 @@ const categoryById = new Map(categories.map((category) => [category.id, category
 const projectById = new Map(projects.map((project) => [project.id, project]))
 
 const sources: PortfolioSource[] = [
+  {
+    categoryId: 'interior',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteOpenPlan,
+    type: 'image',
+    alt: 'Completed Lafayette Residence with an open kitchen and dining area',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteDiningDivider,
+    type: 'image',
+    alt: 'Lafayette Residence dining room with a custom wood and glass divider',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteLivingRoom,
+    type: 'image',
+    alt: 'Bright Lafayette Residence living room with city windows and custom cabinetry',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteKitchen,
+    type: 'image',
+    alt: 'Custom white kitchen framed by walnut millwork at the Lafayette Residence',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteGrayCabinetry,
+    type: 'image',
+    alt: 'Custom gray built-in cabinetry and display shelving at the Lafayette Residence',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayettePinkBuiltIn,
+    type: 'image',
+    alt: 'Custom pink built-in cabinet and shelving at the Lafayette Residence',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteRoomDivider,
+    type: 'image',
+    alt: 'Wood and ribbed-glass room divider with integrated storage at the Lafayette Residence',
+  },
+  {
+    categoryId: 'interior',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteEntryMillwork,
+    type: 'image',
+    alt: 'Entry hall with warm wood millwork and custom lighting at the Lafayette Residence',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteBathroomVanity,
+    type: 'image',
+    alt: 'Completed Lafayette Residence bathroom with illuminated mirror and black fixtures',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteBathroomTub,
+    type: 'image',
+    alt: 'Lafayette Residence bathroom with a glass tub enclosure and terrazzo floor',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteBathroomShower,
+    type: 'image',
+    alt: 'Terrazzo shower and recessed lighting in the Lafayette Residence bathroom',
+  },
+  {
+    categoryId: 'bathroom',
+    projectId: 'lafayette-residence-nyc',
+    src: lafayetteBathroomVideo,
+    poster: lafayetteBathroomVanity,
+    type: 'video',
+    alt: 'Video walkthrough of the completed Lafayette Residence bathroom',
+  },
   {
     categoryId: 'interior',
     projectId: 'great-neck-ny',

@@ -1,0 +1,100 @@
+---
+import ProjectJourneyGallery from '@/components/ProjectJourneyGallery'
+import { Image, getImage } from 'astro:assets'
+import featuredProject from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-open-plan-kitchen-dining.jpg'
+import progressFlooring from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-construction-hardwood-floor-progress.jpeg'
+import progressPlans from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-construction-floor-plan-progress.jpeg'
+import progressOpenPlan from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-construction-open-plan-progress.jpeg'
+import progressFraming from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-construction-framing-progress.jpeg'
+
+const journeySources = [
+  { src: progressPlans, label: 'Plans & preparation' },
+  { src: progressFraming, label: 'Framing & layout' },
+  { src: progressOpenPlan, label: 'Open-plan buildout' },
+  { src: progressFlooring, label: 'Hardwood installation' },
+]
+
+const journeyImages = await Promise.all(
+  journeySources.map(async ({ src, label }) => {
+    const width = Math.min(src.width, 1200)
+    const optimized = await getImage({
+      src,
+      format: 'webp',
+      width,
+      quality: 80,
+    })
+
+    return {
+      src: optimized.src,
+      width,
+      height: Math.round((src.height * width) / src.width),
+      label,
+    }
+  })
+)
+---
+
+<section id="featured-project" class="relative overflow-hidden bg-black text-white">
+  <div class="absolute inset-0">
+    <Image
+      src={featuredProject}
+      format="webp"
+      quality="high"
+      alt="Completed open-plan kitchen and dining room at the Lafayette Residence in New York City"
+      class="h-full w-full object-cover"
+      width={1600}
+      height={1200}
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-linear-to-b from-black/85 via-black/70 to-black/70"></div>
+  </div>
+
+  <div
+    class="relative mx-auto flex min-h-[85vh] max-w-6xl flex-col items-center justify-center px-5 py-20 text-center sm:px-6"
+  >
+    <p class="text-secondary text-sm font-semibold tracking-[0.35em] uppercase">
+      Completed Project
+    </p>
+    <h2
+      class="intersect:visible intersect:animate-fade-down intersect-once intersect-full invisible mt-4 font-serif text-4xl leading-tight font-semibold md:text-6xl"
+    >
+      Lafayette Residence, <span class="text-secondary">NYC</span>
+    </h2>
+    <p class="mt-5 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">
+      From early plans and structural work to a finished home with custom millwork, an open kitchen,
+      refined living spaces, and a complete bathroom renovation.
+    </p>
+
+    <div class="mt-6 flex flex-wrap justify-center gap-2 text-xs font-semibold text-white/85">
+      <span class="rounded-full border border-white/25 bg-black/25 px-3 py-2 backdrop-blur-sm"
+        >Full apartment renovation</span
+      >
+      <span class="rounded-full border border-white/25 bg-black/25 px-3 py-2 backdrop-blur-sm"
+        >Custom millwork</span
+      >
+      <span class="rounded-full border border-white/25 bg-black/25 px-3 py-2 backdrop-blur-sm"
+        >Kitchen & bathroom</span
+      >
+    </div>
+
+    <div class="mt-9 w-full">
+      <ProjectJourneyGallery client:visible images={journeyImages} />
+    </div>
+
+    <div class="mt-9 flex flex-col items-center gap-3 sm:flex-row">
+      <a
+        href="/portfolio?filter=lafayette-residence-nyc#portfolio-gallery"
+        class="bg-primary hover:bg-primary-dark active:bg-primary-light inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+      >
+        View completed project
+        <span aria-hidden="true">→</span>
+      </a>
+      <a
+        href="/contact"
+        class="border-secondary/70 bg-secondary/15 hover:bg-secondary-dark hover:border-secondary-dark inline-flex min-h-11 touch-manipulation items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur-md transition-colors hover:text-black focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+      >
+        Start a similar project
+      </a>
+    </div>
+  </div>
+</section>
