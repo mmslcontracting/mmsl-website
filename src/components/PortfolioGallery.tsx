@@ -23,8 +23,12 @@ export default function PortfolioGallery({
   const [activeFilter, setActiveFilter] = useState(safeInitialFilter)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
   const [mediaStatus, setMediaStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const closeRef = useRef<HTMLButtonElement>(null)
+  const filterTriggerRef = useRef<HTMLButtonElement>(null)
+  const filterCloseRef = useRef<HTMLButtonElement>(null)
+  const filterDialogRef = useRef<HTMLDivElement>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
   const galleryGridRef = useRef<HTMLDivElement>(null)
   const firstProjectRef = useRef<HTMLButtonElement>(null)
@@ -44,6 +48,8 @@ export default function PortfolioGallery({
   const activeDescription = useMemo(() => {
     return filters.find((filter) => filter.id === activeFilter)?.description ?? ''
   }, [activeFilter, filters])
+  const activeFilterLabel =
+    filters.find((filter) => filter.id === activeFilter)?.label ?? 'All Work'
 
   const filteredItems = useMemo(() => {
     if (activeFilter === 'all') return galleryItems
@@ -76,6 +82,7 @@ export default function PortfolioGallery({
     const filterChanged = id !== activeFilter
     setActiveFilter(id)
     setCurrentIndex(0)
+    setIsFilterMenuOpen(false)
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href)
       if (id === 'all') url.searchParams.delete('filter')
@@ -118,6 +125,24 @@ export default function PortfolioGallery({
       requestAnimationFrame(() => previouslyFocused?.focus())
     }
   }, [isModalOpen])
+
+  useEffect(() => {
+    if (!isFilterMenuOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    filterCloseRef.current?.focus()
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsFilterMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      document.body.style.overflow = prev
+      window.removeEventListener('keydown', onKeyDown)
+      requestAnimationFrame(() => filterTriggerRef.current?.focus())
+    }
+  }, [isFilterMenuOpen])
 
   useEffect(() => {
     setMediaStatus('loading')
@@ -168,6 +193,27 @@ export default function PortfolioGallery({
     }
   }
 
+  const onFilterDialogKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      setIsFilterMenuOpen(false)
+      return
+    }
+    if (event.key !== 'Tab') return
+
+    const focusable = filterDialogRef.current?.querySelectorAll<HTMLButtonElement>('button')
+    if (!focusable?.length) return
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault()
+      first.focus()
+    }
+  }
+
   const onTouchStart = (e: React.TouchEvent) => {
     if (currentImage?.type === 'video') return
     touchStartX.current = e.touches[0].clientX
@@ -196,21 +242,21 @@ export default function PortfolioGallery({
         type="button"
         aria-pressed={isActive}
         onClick={(event) => selectFilter(filter.id, event.detail === 0)}
-        className={`focus-visible:ring-primary flex min-h-11 cursor-pointer touch-manipulation items-center justify-between gap-3 rounded-full border px-4 py-2.5 text-left text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:rounded-2xl ${
+        className={`focus-visible:ring-primary flex min-h-9 cursor-pointer touch-manipulation items-center justify-between gap-2 rounded-full border px-3 py-1 text-left text-sm leading-tight font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:rounded-xl ${
           isActive
             ? 'border-primary bg-primary text-white shadow-md'
             : 'hover:border-primary/50 border-black/10 bg-white text-gray-700 hover:bg-gray-50'
         }`}
       >
-        <span className="flex items-center gap-2">
+        <span className="flex items-center gap-1.5">
           <span
             aria-hidden="true"
-            className={`h-2 w-2 shrink-0 rounded-full ${isActive ? 'bg-white' : 'bg-primary/40'}`}
+            className={`h-1.5 w-1.5 shrink-0 rounded-full ${isActive ? 'bg-white' : 'bg-primary/40'}`}
           />
           {filter.label}
         </span>
         <span
-          className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-bold ${
+          className={`shrink-0 rounded-full px-1.5 py-0.5 text-xs font-bold ${
             isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600'
           }`}
         >
@@ -233,32 +279,32 @@ export default function PortfolioGallery({
         </div>
 
         <div className="flex flex-col gap-8 lg:flex-row">
-          <aside className="lg:sticky lg:top-[15vh] lg:w-64 lg:shrink-0 lg:self-start lg:overflow-auto">
+          <aside className="hidden lg:sticky lg:top-[15vh] lg:block lg:w-60 lg:shrink-0 lg:self-start lg:overflow-auto">
             <div
-              className="rounded-3xl border border-gray-200 bg-white p-4 shadow-sm lg:p-5"
+              className="rounded-2xl border border-gray-200 bg-white p-3 shadow-sm lg:p-4"
               role="group"
               aria-label="Filter portfolio work"
             >
-              <p className="px-1 text-xs font-bold tracking-[0.3em] text-gray-500 uppercase">
+              <p className="px-1 text-xs font-bold tracking-[0.24em] text-gray-500 uppercase">
                 Browse by
               </p>
-              <div className="mt-3 flex flex-wrap gap-3 lg:flex-col lg:items-stretch">
+              <div className="mt-2 flex flex-wrap gap-2 lg:flex-col lg:items-stretch">
                 {allFilter && renderFilter(allFilter)}
               </div>
 
-              <p className="mt-6 px-1 text-xs font-bold tracking-[0.3em] text-gray-500 uppercase">
+              <p className="mt-4 px-1 text-xs font-bold tracking-[0.24em] text-gray-500 uppercase">
                 Categories
               </p>
-              <div className="mt-3 flex flex-wrap gap-3 lg:flex-col lg:items-stretch">
+              <div className="mt-2 flex flex-wrap gap-2 lg:flex-col lg:items-stretch">
                 {categoryFilters.map(renderFilter)}
               </div>
 
               {projectFilters.length > 0 && (
                 <>
-                  <p className="mt-6 px-1 text-xs font-bold tracking-[0.3em] text-gray-500 uppercase">
+                  <p className="mt-4 px-1 text-xs font-bold tracking-[0.24em] text-gray-500 uppercase">
                     Projects
                   </p>
-                  <div className="mt-3 flex flex-wrap gap-3 lg:flex-col lg:items-stretch">
+                  <div className="mt-2 flex flex-wrap gap-2 lg:flex-col lg:items-stretch">
                     {projectFilters.map(renderFilter)}
                   </div>
                 </>
@@ -321,7 +367,7 @@ export default function PortfolioGallery({
                     )}
                     <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/75 opacity-100 transition-opacity duration-500 motion-reduce:transition-none md:opacity-70 md:group-hover:opacity-100 md:group-focus-visible:opacity-100" />
                     {isVideo && (
-                      <span className="absolute top-4 left-4 z-20 rounded-full bg-black/70 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
+                      <span className="absolute top-4 left-4 z-20 rounded-full bg-black/70 px-3 py-2 text-xs font-bold tracking-wider text-white uppercase">
                         ▶ Video
                       </span>
                     )}
@@ -351,6 +397,95 @@ export default function PortfolioGallery({
           </div>
         </div>
       </div>
+
+      {!isModalOpen && (
+        <button
+          ref={filterTriggerRef}
+          type="button"
+          aria-haspopup="dialog"
+          aria-expanded={isFilterMenuOpen}
+          onClick={() => setIsFilterMenuOpen(true)}
+          className="border-primary/30 focus-visible:ring-primary fixed left-1/2 z-30 flex min-h-12 max-w-[calc(100vw-2rem)] -translate-x-1/2 cursor-pointer touch-manipulation items-center gap-2 rounded-full border bg-white/95 px-4 py-2 text-[12.5px] font-semibold text-gray-800 shadow-xl backdrop-blur-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:hidden"
+          style={{ bottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            className="text-primary h-4 w-4 shrink-0"
+          >
+            <path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 5v4M6 15v4" />
+          </svg>
+          <span>Filter:</span>
+          <span className="max-w-[52vw] truncate text-gray-600">{activeFilterLabel}</span>
+          <span className="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-xs font-bold">
+            {counts[activeFilter] ?? 0}
+          </span>
+        </button>
+      )}
+
+      {isFilterMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 flex items-end bg-black/45 backdrop-blur-xs lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Filter portfolio work"
+          onClick={() => setIsFilterMenuOpen(false)}
+        >
+          <div
+            ref={filterDialogRef}
+            className="max-h-[78svh] w-full overflow-y-auto rounded-t-3xl bg-white px-5 pt-4 shadow-2xl"
+            style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
+            onClick={(event) => event.stopPropagation()}
+            onKeyDown={onFilterDialogKeyDown}
+          >
+            <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-gray-300" aria-hidden="true" />
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-lg font-semibold text-gray-900">Filter projects</p>
+                <p className="mt-0.5 text-xs text-gray-500">Choose a category or location</p>
+              </div>
+              <button
+                ref={filterCloseRef}
+                type="button"
+                aria-label="Close filters"
+                onClick={() => setIsFilterMenuOpen(false)}
+                className="focus-visible:ring-primary flex h-11 w-11 cursor-pointer touch-manipulation items-center justify-center rounded-full bg-gray-100 text-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+              >
+                <span aria-hidden="true">✕</span>
+              </button>
+            </div>
+
+            <div className="mt-5">
+              <p className="text-xs font-bold tracking-[0.24em] text-gray-500 uppercase">
+                Browse by
+              </p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {allFilter && renderFilter(allFilter)}
+              </div>
+
+              <p className="mt-4 text-xs font-bold tracking-[0.24em] text-gray-500 uppercase">
+                Categories
+              </p>
+              <div className="mt-2 flex flex-wrap gap-2">{categoryFilters.map(renderFilter)}</div>
+
+              {projectFilters.length > 0 && (
+                <>
+                  <p className="mt-4 text-xs font-bold tracking-[0.24em] text-gray-500 uppercase">
+                    Projects
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {projectFilters.map(renderFilter)}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {isModalOpen && currentImage && (
         <div
