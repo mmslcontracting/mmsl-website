@@ -1,5 +1,9 @@
 ---
 import { Image } from 'astro:assets'
+import bathroom from '@/assets/images/recent-project/bathroom.jpeg'
+import bathroom2 from '@/assets/images/recent-project/bathroom2.jpeg'
+import bathroom3 from '@/assets/images/recent-project/bathroom3.jpeg'
+import livingRoom from '@/assets/images/recent-project/living-room.jpeg'
 ---
 
 <section id="recentProject" class="bg-surface py-12 lg:py-20">
@@ -20,14 +24,16 @@ import { Image } from 'astro:assets'
             <Image
               width={600}
               height={800}
-              src="/images/recent-project/bathroom.jpeg"
+              src={bathroom}
+              format="webp"
               alt="Modern bathroom renovation with sleek fixtures and minimalist design"
               class="shadow-card h-48 w-full rounded-lg object-cover"
             />
             <Image
               width={600}
               height={800}
-              src="/images/recent-project/bathroom2.jpeg"
+              src={bathroom2}
+              format="webp"
               alt="Modern bathroom renovation with sleek fixtures and minimalist design"
               class="shadow-card h-32 w-full rounded-lg object-cover"
             />
@@ -36,14 +42,16 @@ import { Image } from 'astro:assets'
             <Image
               width={600}
               height={800}
-              src="/images/recent-project/bathroom3.jpeg"
+              src={bathroom3}
+              format="webp"
               alt="Modern bathroom renovation with sleek fixtures and minimalist design"
               class="shadow-card h-32 w-full rounded-lg object-cover"
             />
             <Image
               width={600}
               height={800}
-              src="/images/recent-project/living-room.jpeg"
+              src={livingRoom}
+              format="webp"
               alt="Modern living room with sleek furniture and ambient lighting"
               class="shadow-card h-32 w-full rounded-lg object-cover"
             />

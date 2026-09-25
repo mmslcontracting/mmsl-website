@@ -1,20 +1,27 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { categories, filters, galleryItems, isVideoSource } from '@/data/portfolio'
+import type { PortfolioCategory, PortfolioItem } from '@/data/portfolio'
 
-const VALID_FILTERS = new Set(filters.map((f) => f.id))
-
-function getFilterFromUrl(): string {
+function getFilterFromUrl(validFilters: Set<string>): string {
   if (typeof window === 'undefined') return 'all'
   const fromUrl = new URLSearchParams(window.location.search).get('filter')
-  return fromUrl && VALID_FILTERS.has(fromUrl) ? fromUrl : 'all'
+  return fromUrl && validFilters.has(fromUrl) ? fromUrl : 'all'
 }
 
 interface PortfolioGalleryProps {
   initialFilter?: string
+  items: PortfolioItem[]
+  categories: PortfolioCategory[]
+  filters: { id: string; label: string }[]
 }
 
-export default function PortfolioGallery({ initialFilter = 'all' }: PortfolioGalleryProps) {
-  const safeInitialFilter = VALID_FILTERS.has(initialFilter) ? initialFilter : 'all'
+export default function PortfolioGallery({
+  initialFilter = 'all',
+  items: galleryItems,
+  categories,
+  filters,
+}: PortfolioGalleryProps) {
+  const validFilters = useMemo(() => new Set(filters.map((filter) => filter.id)), [filters])
+  const safeInitialFilter = validFilters.has(initialFilter) ? initialFilter : 'all'
   const [activeFilter, setActiveFilter] = useState(safeInitialFilter)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -72,13 +79,13 @@ export default function PortfolioGallery({ initialFilter = 'all' }: PortfolioGal
   // Keep state in sync with browser back/forward
   useEffect(() => {
     const onPopState = () => {
-      setActiveFilter(getFilterFromUrl())
+      setActiveFilter(getFilterFromUrl(validFilters))
       setCurrentIndex(0)
       scrollToGalleryStart()
     }
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
-  }, [])
+  }, [validFilters])
 
   // Clamp index when filter changes while modal is open
   useEffect(() => {
@@ -153,7 +160,7 @@ export default function PortfolioGallery({ initialFilter = 'all' }: PortfolioGal
   }
 
   const onTouchStart = (e: React.TouchEvent) => {
-    if (currentImage && isVideoSource(currentImage.src)) return
+    if (currentImage?.type === 'video') return
     touchStartX.current = e.touches[0].clientX
     touchStartY.current = e.touches[0].clientY
   }
@@ -234,7 +241,7 @@ export default function PortfolioGallery({ initialFilter = 'all' }: PortfolioGal
           <div ref={galleryGridRef} className="min-w-0 flex-1 scroll-mt-[15vh]">
             <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
               {filteredItems.map((item, index) => {
-                const isVideo = isVideoSource(item.src)
+                const isVideo = item.type === 'video'
                 return (
                   <button
                     ref={index === 0 ? firstProjectRef : undefined}
@@ -277,8 +284,8 @@ export default function PortfolioGallery({ initialFilter = 'all' }: PortfolioGal
                       <img
                         src={item.src}
                         alt={item.alt}
-                        width="1200"
-                        height="900"
+                        width={item.width}
+                        height={item.height}
                         className="h-64 w-full cursor-pointer object-cover transition-transform duration-500 group-hover:scale-105 group-focus-visible:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
                         loading="lazy"
                         decoding="async"
@@ -356,7 +363,7 @@ export default function PortfolioGallery({ initialFilter = 'all' }: PortfolioGal
                   Loading project…
                 </div>
               )}
-              {isVideoSource(currentImage.src) ? (
+              {currentImage.type === 'video' ? (
                 <video
                   src={currentImage.src}
                   poster={currentImage.poster}
@@ -373,8 +380,8 @@ export default function PortfolioGallery({ initialFilter = 'all' }: PortfolioGal
                 <img
                   src={currentImage.src}
                   alt={currentImage.alt}
-                  width="1600"
-                  height="1200"
+                  width={currentImage.width}
+                  height={currentImage.height}
                   className="h-full max-h-[75vh] max-w-[90vw] rounded-xl object-contain"
                   onLoad={() => setMediaStatus('ready')}
                   onError={() => setMediaStatus('error')}

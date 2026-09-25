@@ -2,11 +2,13 @@
 import CTA from '@/components/CTA.astro'
 import Layout from '@/layouts/Layout.astro'
 import { Image } from 'astro:assets'
+import heroImage from '@/assets/images/portfolio/interior/1.jpeg'
+import historyImage from '@/assets/images/about/history.jpeg'
 
 const seo = {
   title: 'About Us',
   description:
-    'MMSL Contracting Corp — Family-owned renovation company serving NYC & NJ. Quality craftsmanship and customer satisfaction.',
+    'MMSL Contracting Corp — Renovation company serving NYC & NJ. Quality craftsmanship and customer satisfaction.',
   keywords: [
     'about MMSL Contracting Corp',
     'MMSL Contracting Corp',
@@ -16,8 +18,6 @@ const seo = {
     'New Jersey painting contractors',
   ],
 }
-
-const heroImage = '/images/portfolio/interior/1.jpeg'
 
 const timeline = [
   { title: 'Discovery', copy: 'Listening tours, site walks, and research.' },
@@ -34,6 +34,8 @@ const timeline = [
         width={1200}
         height={1600}
         src={heroImage}
+        format="webp"
+        quality="high"
         alt="Design studio"
         class="h-full w-full object-cover"
         loading="eager"
@@ -48,7 +50,9 @@ const timeline = [
       <h1
         class="animate-fade-up mt-6 max-w-3xl font-serif text-4xl leading-tight font-semibold md:text-5xl"
       >
-        <span class="sr-only">MMSL Contracting Corp — </span>Get to <span class="text-gradient-gold">know</span> us
+        <span class="sr-only">MMSL Contracting Corp — </span>Get to <span class="text-gradient-gold"
+          >know</span
+        > us
       </h1>
       <p class="mt-6 max-w-2xl text-lg text-white/80">Learn more about MMSL Contracting Corp.</p>
     </div>
@@ -70,9 +74,9 @@ const timeline = [
               making us enjoy unique experiences that we never dreamed of living.
             </p>
             <p class="intersect:visible intersect:animate-fade-up animate-delay-300 invisible">
-              At MMSL Contracting Corp, our dream and goal is that our customers have a space where they
-              can enjoy with their love ones. We can transform their spaces in harmony with all the
-              components in a complete interior renovation or make a cosmetic update.
+              At MMSL Contracting Corp, our dream and goal is that our customers have a space where
+              they can enjoy with their love ones. We can transform their spaces in harmony with all
+              the components in a complete interior renovation or make a cosmetic update.
             </p>
             <p class="intersect:visible intersect:animate-fade-up animate-delay-600 invisible">
               The name of our MMS firm is derived from the initials of each member of my family,
@@ -83,7 +87,8 @@ const timeline = [
         </div>
         <div class="h-[350px] overflow-hidden md:h-[400px]">
           <Image
-            src="/images/about/history.jpeg"
+            src={historyImage}
+            format="webp"
             alt="MMSL Contracting Corp family team"
             width={600}
             height={400}
@@ -99,10 +104,10 @@ const timeline = [
     <div class="container mx-auto px-6">
       <div class="rounded-3xl border border-gray-200 bg-[#fefefe] p-10 shadow-lg">
         <p class="text-lg text-gray-800">
-          Our mission at MMSL Contracting Corp is simple: to provide high-quality services in a timely manner.
-          Our team caters to each project’s specific needs to ensure excellence. We hope you’ll find
-          what you’re looking for. For more information or general inquiries, feel free to get in
-          touch today.
+          Our mission at MMSL Contracting Corp is simple: to provide high-quality services in a
+          timely manner. Our team caters to each project’s specific needs to ensure excellence. We
+          hope you’ll find what you’re looking for. For more information or general inquiries, feel
+          free to get in touch today.
         </p>
       </div>
     </div>

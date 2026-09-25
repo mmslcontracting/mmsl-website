@@ -1,4 +1,8 @@
 ---
+import { getImage } from 'astro:assets'
+import logoImage from '@/assets/images/logo.jpg'
+import ogImage from '@/assets/images/og-image.jpg'
+
 export interface Props {
   title?: string
   description?: string
@@ -12,7 +16,22 @@ export interface Props {
 const siteName = 'MMSL Contracting Corp'
 const alternateName = 'MMSL Contracting'
 const siteUrl = 'https://www.mmslcontracting.com'
-const defaultImage = '/images/og-image.jpg'
+const optimizedOgImage = await getImage({
+  src: ogImage,
+  format: 'webp',
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  quality: 85,
+})
+const optimizedLogo = await getImage({
+  src: logoImage,
+  format: 'webp',
+  width: 300,
+  quality: 90,
+})
+const defaultImage = optimizedOgImage.src
+const logoUrl = new URL(optimizedLogo.src, siteUrl).toString()
 const twitterHandle = '@mmspaint'
 
 const {
@@ -41,7 +60,7 @@ const {
 } = Astro.props
 
 const pageTitle = title === siteName ? title : `${title} | ${siteName}`
-const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`
+const fullImageUrl = new URL(image, siteUrl).toString()
 const canonicalUrl = canonical || `${siteUrl}${Astro.url.pathname}`
 
 // JSON-LD Structured Data for Local Business
@@ -56,7 +75,7 @@ const localBusinessSchema = {
   telephone: '+1-631-805-6259',
   email: 'contact@mmslcontracting.com',
   image: fullImageUrl,
-  logo: `${siteUrl}/images/logo.jpg`,
+  logo: logoUrl,
   openingHours: 'Mo-Fr 08:00-17:00',
   address: {
     '@type': 'PostalAddress',
@@ -74,7 +93,10 @@ const localBusinessSchema = {
       name: 'New Jersey',
     },
   ],
-  sameAs: ['https://www.instagram.com/mmslcontracting?stkn=bWo2cWh4eHJ2bmln', 'https://www.facebook.com/share/1Bu6DFeJoF/'],
+  sameAs: [
+    'https://www.instagram.com/mmslcontracting?stkn=bWo2cWh4eHJ2bmln',
+    'https://www.facebook.com/share/1Bu6DFeJoF/',
+  ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Renovation Services',
@@ -146,14 +168,17 @@ const organizationSchema = {
   alternateName: alternateName,
   legalName: siteName,
   url: siteUrl,
-  logo: `${siteUrl}/images/logo.jpg`,
+  logo: logoUrl,
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: '+1-631-805-6259',
     contactType: 'customer service',
     availableLanguage: ['English', 'Spanish'],
   },
-  sameAs: ['https://www.instagram.com/mmslcontracting?stkn=bWo2cWh4eHJ2bmln', 'https://www.facebook.com/share/1Bu6DFeJoF/'],
+  sameAs: [
+    'https://www.instagram.com/mmslcontracting?stkn=bWo2cWh4eHJ2bmln',
+    'https://www.facebook.com/share/1Bu6DFeJoF/',
+  ],
 }
 ---
 
@@ -177,7 +202,7 @@ const organizationSchema = {
 <meta property="og:image:alt" content={title} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:type" content="image/webp" />
 <meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content="en_US" />
 

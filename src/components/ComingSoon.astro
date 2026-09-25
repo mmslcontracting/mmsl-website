@@ -1,14 +1,37 @@
 ---
 import ComingSoonGallery from '@/components/ComingSoonGallery'
-import { Image } from 'astro:assets'
+import { Image, getImage } from 'astro:assets'
+import wallpaper from '@/assets/images/coming-soon/coming-soon-bg.jpeg'
+import concept1 from '@/assets/images/coming-soon/1.jpeg'
+import concept2 from '@/assets/images/coming-soon/2.jpeg'
+import concept3 from '@/assets/images/coming-soon/3.jpeg'
+import concept4 from '@/assets/images/coming-soon/4.jpeg'
 
-const wallpaper = '/images/coming-soon/coming-soon-bg.jpeg'
+const conceptSources = [concept1, concept2, concept3, concept4]
+const conceptImages = await Promise.all(
+  conceptSources.map(async (source, index) => {
+    const optimized = await getImage({
+      src: source,
+      format: 'webp',
+      width: Math.min(source.width, 1200),
+      quality: 80,
+    })
+    return {
+      src: optimized.src,
+      width: Math.min(source.width, 1200),
+      height: Math.round((source.height * Math.min(source.width, 1200)) / source.width),
+      label: index < 2 ? `Concept sketch ${index + 1}` : `Concept detail ${index + 1}`,
+    }
+  })
+)
 ---
 
 <section class="relative overflow-hidden bg-black text-white">
   <div class="absolute inset-0">
     <Image
       src={wallpaper}
+      format="webp"
+      quality="high"
       alt="Coming soon project wallpaper"
       class="h-full w-full object-cover"
       width={1600}
@@ -30,7 +53,7 @@ const wallpaper = '/images/coming-soon/coming-soon-bg.jpeg'
       <span class="text-gradient-primary">New project launching soon</span>
     </h2>
     <div class="mt-10 w-full">
-      <ComingSoonGallery client:only="react" />
+      <ComingSoonGallery client:only="react" images={conceptImages} />
     </div>
   </div>
 </section>

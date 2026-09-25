@@ -8,7 +8,13 @@ const navLinks = [
   { label: 'Contact', href: '/contact' },
 ]
 
-export default function MobileNav() {
+interface MobileNavProps {
+  logoSrc: string
+  logoWidth: number
+  logoHeight: number
+}
+
+export default function MobileNav({ logoSrc, logoWidth, logoHeight }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -76,8 +82,10 @@ export default function MobileNav() {
         <div className="flex h-[13vh] items-center justify-between border-b border-gray-100 px-6">
           <a href="/" onClick={() => setIsOpen(false)}>
             <img
-              src="/images/logo.jpg"
+              src={logoSrc}
               alt="MMSL Contracting Corp logo"
+              width={logoWidth}
+              height={logoHeight}
               className="h-12 w-auto"
             />
           </a>

@@ -1,25 +1,17 @@
 import { useMemo, useState } from 'react'
 
-const images = [
-  {
-    src: '/images/coming-soon/1.jpeg',
-    label: 'Concept sketch 1',
-  },
-  {
-    src: '/images/coming-soon/2.jpeg',
-    label: 'Concept sketch 2',
-  },
-  {
-    src: '/images/coming-soon/3.jpeg',
-    label: 'Concept detail 3',
-  },
-  {
-    src: '/images/coming-soon/4.jpeg',
-    label: 'Concept detail 4',
-  },
-]
+interface GalleryImage {
+  src: string
+  width: number
+  height: number
+  label: string
+}
 
-export default function ComingSoonGallery() {
+interface ComingSoonGalleryProps {
+  images: GalleryImage[]
+}
+
+export default function ComingSoonGallery({ images }: ComingSoonGalleryProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const currentImage = useMemo(() => images[currentIndex], [currentIndex])
@@ -51,6 +43,8 @@ export default function ComingSoonGallery() {
             <img
               src={image.src}
               alt={image.label}
+              width={image.width}
+              height={image.height}
               loading="lazy"
               className="h-28 w-28 object-cover transition duration-500 group-hover:scale-110"
             />
@@ -80,6 +74,8 @@ export default function ComingSoonGallery() {
           <img
             src={currentImage.src}
             alt={currentImage.label}
+            width={currentImage.width}
+            height={currentImage.height}
             className="h-full max-h-[85vh] max-w-[90vw] rounded-3xl object-contain"
           />
           <button

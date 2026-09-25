@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-
-const heroImg = '/images/coming-soon/wallpaper.jpeg'
+import heroImg from '@/assets/images/coming-soon/wallpaper.jpeg'
 ---
 
 <section
@@ -12,6 +11,8 @@ const heroImg = '/images/coming-soon/wallpaper.jpeg'
       width={1200}
       height={1600}
       src={heroImg}
+      format="webp"
+      quality="high"
       alt="Hero background"
       class="h-full w-full object-cover"
       fetchpriority="high"
@@ -23,7 +24,9 @@ const heroImg = '/images/coming-soon/wallpaper.jpeg'
     <div class="">
       <p class="mb-4 text-sm text-white/80">New York City · North Jersey · Central Jersey</p>
       <h1 class="animate-fade-up text-5xl text-white md:text-6xl lg:text-[80px]">
-        <span class="sr-only">MMSL Contracting Corp — </span>Improve / <span class="text-gradient-gold">Transform</span><br />your space
+        <span class="sr-only">MMSL Contracting Corp — </span>Improve / <span
+          class="text-gradient-gold">Transform</span
+        ><br />your space
       </h1>
 
       <p class="mt-8 max-w-md text-white/90">

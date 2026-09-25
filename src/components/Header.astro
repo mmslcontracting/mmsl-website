@@ -1,8 +1,16 @@
 ---
-import { Image } from 'astro:assets'
+import { Image, getImage } from 'astro:assets'
+import logoImage from '@/assets/images/logo.jpg'
 import MobileNav from './MobileNav'
 
-const logoSrc = '/images/logo.jpg'
+const logoWidth = 480
+const logoHeight = Math.round((logoImage.height * logoWidth) / logoImage.width)
+const mobileLogo = await getImage({
+  src: logoImage,
+  format: 'webp',
+  width: logoWidth,
+  quality: 'max',
+})
 const pathname = Astro.url.pathname
 
 const navLinks = [
@@ -24,9 +32,11 @@ function isActive(href: string): boolean {
   <div class="container mx-auto flex items-center justify-between">
     <a href="/" class="flex items-center gap-3">
       <Image
-        width={150}
-        height={50}
-        src={logoSrc}
+        width={logoWidth}
+        src={logoImage}
+        format="webp"
+        quality="max"
+        priority
         alt="MMSL Contracting Corp logo"
         class="h-8 w-auto rounded-none md:h-14"
       />
@@ -53,7 +63,7 @@ function isActive(href: string): boolean {
     </div>
 
     <!-- Mobile Navigation -->
-    <MobileNav client:load />
+    <MobileNav client:load logoSrc={mobileLogo.src} logoWidth={logoWidth} logoHeight={logoHeight} />
   </div>
 </header>
 
