@@ -1,3 +1,80 @@
+---
+import { Image } from 'astro:assets'
+import drywallImg from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-living-room-city-windows.jpg'
+import paintingImg from '@/assets/images/portfolio/interior/2.jpeg'
+import kitchenImg from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-open-plan-kitchen-dining.jpg'
+import bathroomImg from '@/assets/images/portfolio/park-slope-brooklyn-ny/park-slope-bathroom-patterned-tile-floor.jpeg'
+import woodImg from '@/assets/images/portfolio/exterior/2b435148-b141-4bdd-baa4-43cea22e3751.jpeg'
+import floorImg from '@/assets/images/portfolio/great-neck-ny/great-neck-bedroom-hardwood-floor.jpeg'
+import decksImg from '@/assets/images/portfolio/exterior/3.jpeg'
+import fencesImg from '@/assets/images/portfolio/exterior/1.jpeg'
+import carpentryImg from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-dining-room-divider.jpg'
+import basementImg from '@/assets/images/portfolio/interior/1.jpeg'
+
+const services = [
+  {
+    src: drywallImg,
+    alt: 'Smooth plaster walls and ceiling beams finished by MMSL Contracting Corp',
+    title: 'Drywall & Plastering',
+    copy: 'Expert drywall and plaster installation and repair for smooth, flawless walls and ceilings.',
+  },
+  {
+    src: paintingImg,
+    alt: 'Living room with fresh terracotta paint and white trim by MMSL Contracting Corp',
+    title: 'Painting and wallpaper installation',
+    copy: 'Professional interior and exterior painting for a fresh, vibrant look.',
+  },
+  {
+    src: kitchenImg,
+    alt: 'Custom kitchen with walnut millwork remodeled by MMSL Contracting Corp',
+    title: 'Kitchen Remodeling',
+    copy: 'Transform your kitchen with modern designs, new cabinetry, and updated finishes.',
+  },
+  {
+    src: bathroomImg,
+    alt: 'Renovated bathroom with subway tile and geometric floor by MMSL Contracting Corp',
+    title: 'Bathroom Renovation',
+    copy: 'Upgrade your bathroom for comfort, style, and improved functionality.',
+  },
+  {
+    src: woodImg,
+    alt: 'Restored historic wood entry door by MMSL Contracting Corp',
+    title: 'Expert Wood Restoration',
+    copy: 'Restoring and preserving wood features to their original beauty and strength.',
+  },
+  {
+    src: floorImg,
+    alt: 'Newly installed hardwood floor by MMSL Contracting Corp',
+    title: 'Hardwood Floor & Tile Installation',
+    copy: 'Professional installation of hardwood floors and tiles for lasting quality.',
+  },
+  {
+    src: decksImg,
+    alt: 'Newly built cedar deck by MMSL Contracting Corp',
+    title: 'Decks',
+    copy: 'Custom deck design and construction for outdoor living spaces.',
+  },
+  {
+    src: fencesImg,
+    alt: 'Finished brownstone entry and stoop by MMSL Contracting Corp',
+    title: 'Fences',
+    copy: 'Installation and repair of fences for privacy and security.',
+  },
+  {
+    src: carpentryImg,
+    alt: 'Custom wood and glass room divider built by MMSL Contracting Corp',
+    title: 'Carpentry',
+    copy: 'Carpentry solutions for interiors and exteriors.',
+  },
+  {
+    src: basementImg,
+    alt: 'Finished living space with detailed millwork by MMSL Contracting Corp',
+    title: 'Basement',
+    copy: 'Basement finishing and remodeling for added living space and value.',
+  },
+]
+---
+
 <section id="services" class="bg-white py-20">
   <div class="container mx-auto">
     <div class="mb-12 text-center">
@@ -6,168 +83,26 @@
     </div>
 
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-      <!-- Drywall & Plastering -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2"></rect>
-          </svg>
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Drywall & Plastering</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Expert drywall and plaster installation and repair for smooth, flawless walls and
-          ceilings.
-        </p>
-      </div>
-
-      <!-- Painting -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><path d="M4 20h16M4 4h16v8a8 8 0 01-16 0V4z" stroke-width="2"></path></svg
-          >
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Painting and wallpaper installation</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Professional interior and exterior painting for a fresh, vibrant look.
-        </p>
-      </div>
-
-      <!-- Kitchen Remodeling -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><rect x="3" y="8" width="18" height="13" rx="2" stroke-width="2"></rect><path
-              d="M8 8V6a4 4 0 018 0v2"
-              stroke-width="2"></path></svg
-          >
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Kitchen Remodeling</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Transform your kitchen with modern designs, new cabinetry, and updated finishes.
-        </p>
-      </div>
-
-      <!-- Bathroom Renovation -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><rect x="4" y="10" width="16" height="8" rx="2" stroke-width="2"></rect><path
-              d="M8 10V7a4 4 0 018 0v3"
-              stroke-width="2"></path></svg
-          >
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Bathroom Renovation</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Upgrade your bathroom for comfort, style, and improved functionality.
-        </p>
-      </div>
-
-      <!-- Expert Wood Restoration -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><path d="M12 2v20M2 12h20" stroke-width="2"></path></svg
-          >
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Expert Wood Restoration</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Restoring and preserving wood features to their original beauty and strength.
-        </p>
-      </div>
-
-      <!-- Hardwood Floor & Tile Installation -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2"></rect><path
-              d="M4 12h16M12 4v16"
-              stroke-width="2"></path></svg
-          >
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Hardwood Floor & Tile Installation</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Professional installation of hardwood floors and tiles for lasting quality.
-        </p>
-      </div>
-
-      <!-- Decks -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><rect x="3" y="12" width="18" height="6" rx="2" stroke-width="2"></rect><path
-              d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2"
-              stroke-width="2"></path></svg
-          >
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Decks</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Custom deck design and construction for outdoor living spaces.
-        </p>
-      </div>
-
-      <!-- Fences -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2"></rect><path
-              d="M8 4v16M16 4v16"
-              stroke-width="2"></path></svg
-          >
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Fences</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Installation and repair of fences for privacy and security.
-        </p>
-      </div>
-
-      <!-- Carpentry -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2"></rect><path
-              d="M4 20l16-16"
-              stroke-width="2"></path></svg
-          >
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Carpentry</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Carpentry solutions for interiors and exteriors.
-        </p>
-      </div>
-
-      <!-- Basement -->
-      <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible text-center">
-        <div
-          class="bg-secondary/15 group-hover:bg-secondary/25 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors duration-300"
-        >
-          <svg class="text-primary h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            ><rect x="3" y="16" width="18" height="5" rx="2" stroke-width="2"></rect></svg
-          >
-        </div>
-        <h3 class="mb-3 text-xl font-semibold">Basement</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Basement finishing and remodeling for added living space and value.
-        </p>
-      </div>
+      {
+        services.map((service) => (
+          <div class="group intersect:visible intersect:animate-fade-up intersect-once intersect-full animate-delay-100 animate-duration-[1.5s] invisible overflow-hidden rounded-2xl border border-gray-100 bg-white text-center shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div class="overflow-hidden">
+              <Image
+                src={service.src}
+                alt={service.alt}
+                width={600}
+                height={400}
+                class="h-44 w-full object-cover transition duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-5">
+              <h3 class="mb-3 text-xl font-semibold">{service.title}</h3>
+              <p class="text-text-secondary text-sm leading-relaxed">{service.copy}</p>
+            </div>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
