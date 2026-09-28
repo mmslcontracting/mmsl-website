@@ -1,0 +1,234 @@
+---
+import { googleReviews, googleReviewsUrl, googleWriteReviewUrl } from '@/data/reviews'
+---
+
+<section class="bg-surface/35 py-20" aria-labelledby="reviews-heading">
+  <div class="container mx-auto">
+    <div class="mx-auto mb-12 max-w-4xl text-center">
+      <h2 id="reviews-heading" class="font-serif text-4xl text-gray-900 md:text-5xl">
+        What Our Clients Say
+      </h2>
+      <div class="bg-secondary mx-auto mt-5 h-1 w-28 rounded-full"></div>
+      <p class="mx-auto mt-6 max-w-3xl text-base leading-7 text-gray-600 md:text-lg">
+        Homeowners trust MMSL Contracting Corp for attentive craftsmanship, clear communication,
+        reliable schedules, and beautiful results across every renovation.
+      </p>
+    </div>
+
+    <div class="grid items-start gap-6 lg:grid-cols-3">
+      {
+        googleReviews.map((review, index) => (
+          <article
+            class="review-card intersect:visible intersect:animate-fade-up intersect-once invisible flex flex-col rounded-xl border border-gray-200/80 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md md:p-7"
+            data-review-card
+            data-expanded="false"
+          >
+            <header class="flex items-center gap-4">
+              <div
+                class:list={[
+                  'flex size-12 shrink-0 items-center justify-center rounded-full text-sm font-semibold',
+                  review.avatarClass,
+                ]}
+                aria-hidden="true"
+              >
+                {review.initials}
+              </div>
+
+              <div class="min-w-0 flex-1 text-left">
+                <h3 class="truncate font-sans text-base font-semibold text-gray-900">
+                  {review.author}
+                </h3>
+                <p class="mt-0.5 text-sm text-gray-500">{review.date}</p>
+              </div>
+
+              <svg aria-label="Google" class="size-6 shrink-0" role="img" viewBox="0 0 18 18">
+                <>
+                  <path
+                    fill="#4285f4"
+                    d="M17.64 9.205q-.002-.957-.164-1.841H9v3.482h4.844a4.14 4.14 0 0 1-1.797 2.716v2.258h2.909c1.702-1.567 2.684-3.874 2.684-6.615"
+                  />
+                  <path
+                    fill="#34a853"
+                    d="M9 18c2.43 0 4.468-.806 5.956-2.18l-2.909-2.258c-.806.54-1.836.86-3.047.86-2.344 0-4.328-1.585-5.037-3.714H.956v2.332A9 9 0 0 0 9 18"
+                  />
+                  <path
+                    fill="#fbbc05"
+                    d="M3.963 10.708A5.4 5.4 0 0 1 3.682 9c0-.593.102-1.17.281-1.708V4.96H.956A9 9 0 0 0 0 9a9 9 0 0 0 .956 4.04z"
+                  />
+                  <path
+                    fill="#ea4335"
+                    d="M9 3.58c1.321 0 2.507.454 3.442 1.345l2.582-2.582C13.464.89 11.427 0 9 0A9 9 0 0 0 .956 4.96l3.007 2.332C4.672 5.163 6.656 3.58 9 3.58"
+                  />
+                </>
+              </svg>
+            </header>
+
+            <div
+              class="mt-5 flex gap-1 text-[rgb(246,187,6)]"
+              aria-label={`${review.rating} out of 5 stars`}
+            >
+              {Array.from({ length: review.rating }).map(() => (
+                <svg aria-hidden="true" viewBox="0 0 24 24" class="size-5 fill-current">
+                  <path d="m12 2.4 2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 17.18l-5.8 3.05 1.11-6.45-4.69-4.57 6.48-.94L12 2.4Z" />
+                </svg>
+              ))}
+            </div>
+
+            <div id={`review-content-${index}`} class="review-copy mt-4" data-review-content>
+              <blockquote class="text-left text-[0.95rem] leading-7 whitespace-pre-line text-gray-700">
+                “{review.text}”
+              </blockquote>
+            </div>
+
+            <button
+              type="button"
+              class="review-toggle text-primary mt-4 inline-flex items-center gap-1.5 self-start text-sm font-semibold underline-offset-4 hover:underline"
+              aria-expanded="false"
+              aria-controls={`review-content-${index}`}
+              data-review-toggle
+            >
+              <span data-review-toggle-label>Read more</span>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                class="review-toggle-icon size-4"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="m6 8 4 4 4-4" />
+              </svg>
+            </button>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a
+        href={googleReviewsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group bg-primary border-primary inline-flex items-center justify-center gap-2 rounded-full border px-8 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-gray-900"
+        aria-label="View all MMSL Contracting Corp reviews on Google Maps (opens in a new tab)"
+      >
+        View all Google reviews
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          class="size-4 transition-transform group-hover:translate-x-0.5"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"></path>
+        </svg>
+      </a>
+
+      <a
+        href={googleWriteReviewUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group border-secondary bg-secondary/85 hover:bg-secondary inline-flex items-center justify-center gap-2 rounded-full border px-8 py-3 text-sm font-semibold text-gray-900 shadow-[0_8px_28px_rgba(212,175,55,0.22)] backdrop-blur-sm transition hover:shadow-[0_10px_32px_rgba(212,175,55,0.32)]"
+        aria-label="Leave a review for MMSL Contracting Corp on Google (opens in a new tab)"
+      >
+        Write a review
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initializeReviewCards = () => {
+    document.querySelectorAll<HTMLElement>('[data-review-card]').forEach((card) => {
+      if (card.dataset.initialized === 'true') return
+
+      const content = card.querySelector<HTMLElement>('[data-review-content]')
+      const toggle = card.querySelector<HTMLButtonElement>('[data-review-toggle]')
+      const label = card.querySelector<HTMLElement>('[data-review-toggle-label]')
+
+      if (!content || !toggle || !label) return
+
+      card.dataset.initialized = 'true'
+
+      if (content.scrollHeight <= content.clientHeight + 1) {
+        content.style.height = 'auto'
+        toggle.hidden = true
+        return
+      }
+
+      const setExpanded = (expanded: boolean) => {
+        const currentHeight = content.getBoundingClientRect().height
+
+        content.style.height = `${currentHeight}px`
+        void content.offsetHeight
+
+        card.dataset.expanded = String(expanded)
+        toggle.setAttribute('aria-expanded', String(expanded))
+        label.textContent = expanded ? 'Show less' : 'Read more'
+        content.style.height = expanded
+          ? `${content.scrollHeight}px`
+          : 'var(--review-collapsed-height)'
+      }
+
+      toggle.addEventListener('click', () => {
+        setExpanded(card.dataset.expanded !== 'true')
+      })
+
+      content.addEventListener('transitionend', (event) => {
+        if (event.propertyName === 'height' && card.dataset.expanded === 'true') {
+          content.style.height = 'auto'
+        }
+      })
+    })
+  }
+
+  document.addEventListener('astro:page-load', initializeReviewCards)
+  initializeReviewCards()
+</script>
+
+<style>
+  .review-copy {
+    --review-collapsed-height: 10.5rem;
+
+    position: relative;
+    height: var(--review-collapsed-height);
+    overflow: hidden;
+    transition: height 200ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .review-copy::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2.5rem;
+    background: linear-gradient(to bottom, transparent, white 85%);
+    content: '';
+    pointer-events: none;
+    transition: opacity 200ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .review-card[data-expanded='true'] .review-copy::after {
+    opacity: 0;
+  }
+
+  .review-toggle-icon {
+    transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .review-card[data-expanded='true'] .review-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .review-copy {
+      transition: none;
+    }
+
+    .review-copy::after,
+    .review-toggle-icon {
+      transition-duration: 100ms;
+    }
+  }
+</style>
