@@ -43,7 +43,7 @@ export default function MobileNav({ logoSrc, logoWidth, logoHeight }: MobileNavP
         type="button"
         aria-label="menu"
         onClick={() => setIsOpen(!isOpen)}
-        className="relative z-60 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-1.5 md:hidden"
+        className="relative z-60 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-1.5 lg:hidden"
       >
         <span
           className={`h-0.5 w-6 bg-gray-800 transition-all duration-300 ${
@@ -64,7 +64,7 @@ export default function MobileNav({ logoSrc, logoWidth, logoHeight }: MobileNavP
 
       {/* Overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={() => setIsOpen(false)}
@@ -73,7 +73,7 @@ export default function MobileNav({ logoSrc, logoWidth, logoHeight }: MobileNavP
 
       {/* Mobile Menu Panel */}
       <nav
-        className={`fixed top-0 right-0 z-50 flex h-full w-[80%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 z-50 flex h-full w-[80%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-label="Mobile navigation"
