@@ -117,6 +117,69 @@ h6 {
   font-weight: 700;
 }
 
+:root {
+  --lightbox-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+.gallery-lightbox {
+  opacity: 1;
+  transition: opacity 180ms var(--lightbox-ease-out);
+
+  @starting-style {
+    opacity: 0;
+  }
+}
+
+.gallery-lightbox-panel {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 220ms var(--lightbox-ease-out),
+    transform 220ms var(--lightbox-ease-out);
+  will-change: opacity, transform;
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+.gallery-lightbox[data-state='closing'] {
+  opacity: 0;
+  transition-duration: 140ms;
+}
+
+.gallery-lightbox[data-state='closing'] .gallery-lightbox-panel {
+  opacity: 0;
+  transform: scale(0.97);
+  transition-duration: 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-lightbox {
+    transition-duration: 100ms;
+  }
+
+  .gallery-lightbox-panel,
+  .gallery-lightbox[data-state='closing'] .gallery-lightbox-panel {
+    transform: none;
+    transition:
+      opacity 100ms var(--lightbox-ease-out),
+      transform 0ms;
+  }
+
+  .gallery-lightbox-panel {
+    @starting-style {
+      opacity: 0;
+      transform: none;
+    }
+  }
+}
+
 p {
   font-family: var(--font-sans);
 }

@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { PortfolioFilter, PortfolioItem } from '@/data/portfolio'
 
+const lightboxExitDuration = 160
+
 function getFilterFromUrl(validFilters: Set<string>): string {
   if (typeof window === 'undefined') return 'all'
   const fromUrl = new URLSearchParams(window.location.search).get('filter')
@@ -23,6 +25,7 @@ export default function PortfolioGallery({
   const [activeFilter, setActiveFilter] = useState(safeInitialFilter)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalClosing, setIsModalClosing] = useState(false)
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
   const [mediaStatus, setMediaStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const closeRef = useRef<HTMLButtonElement>(null)
@@ -34,6 +37,7 @@ export default function PortfolioGallery({
   const firstProjectRef = useRef<HTMLButtonElement>(null)
   const touchStartX = useRef<number | null>(null)
   const touchStartY = useRef<number | null>(null)
+  const modalCloseTimeoutRef = useRef<number | null>(null)
 
   const counts = useMemo(() => {
     const map: Record<string, number> = { all: galleryItems.length }
@@ -148,12 +152,36 @@ export default function PortfolioGallery({
     setMediaStatus('loading')
   }, [currentIndex, activeFilter])
 
+  useEffect(() => {
+    return () => {
+      if (modalCloseTimeoutRef.current !== null) {
+        window.clearTimeout(modalCloseTimeoutRef.current)
+      }
+    }
+  }, [])
+
   const openModal = (index: number) => {
+    if (modalCloseTimeoutRef.current !== null) {
+      window.clearTimeout(modalCloseTimeoutRef.current)
+      modalCloseTimeoutRef.current = null
+    }
     setCurrentIndex(index)
+    setIsModalClosing(false)
     setIsModalOpen(true)
   }
 
-  const closeModal = () => setIsModalOpen(false)
+  const closeModal = () => {
+    if (isModalClosing) return
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const closeDuration = prefersReducedMotion ? 100 : lightboxExitDuration
+    setIsModalClosing(true)
+    modalCloseTimeoutRef.current = window.setTimeout(() => {
+      setIsModalOpen(false)
+      setIsModalClosing(false)
+      modalCloseTimeoutRef.current = null
+    }, closeDuration)
+  }
 
   const showPrev = () => {
     if (!filteredItems.length) return
@@ -481,7 +509,8 @@ export default function PortfolioGallery({
       {isModalOpen && currentImage && (
         <div
           ref={dialogRef}
-          className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-black/90 p-4"
+          className="gallery-lightbox fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-black/90 p-4"
+          data-state={isModalClosing ? 'closing' : 'open'}
           role="dialog"
           aria-modal="true"
           aria-label={`${currentImage.title} — ${currentImage.label}`}
@@ -489,7 +518,7 @@ export default function PortfolioGallery({
           onKeyDown={onDialogKeyDown}
         >
           <div
-            className="flex max-h-full flex-col items-center"
+            className="gallery-lightbox-panel flex max-h-full flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex w-full max-w-[90vw] items-center justify-between gap-4 pb-3 text-white">
@@ -551,14 +580,25 @@ export default function PortfolioGallery({
               )}
             </div>
 
-            <div className="flex items-center gap-4 pt-4">
+            <div className="flex items-center gap-3 pt-4">
               <button
                 type="button"
                 aria-label="Previous project"
-                className="flex h-12 w-12 cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/50 bg-black/50 text-white transition-colors hover:bg-black/70 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                className="flex h-11 w-11 cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/50 bg-black/50 text-white transition-colors hover:bg-black/70 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                 onClick={showPrev}
               >
-                ←
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                >
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
               </button>
               <span className="min-w-16 text-center text-sm text-white/80" aria-live="polite">
                 {currentIndex + 1} / {filteredItems.length}
@@ -566,10 +606,21 @@ export default function PortfolioGallery({
               <button
                 type="button"
                 aria-label="Next project"
-                className="flex h-12 w-12 cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/50 bg-black/50 text-white transition-colors hover:bg-black/70 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                className="flex h-11 w-11 cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/50 bg-black/50 text-white transition-colors hover:bg-black/70 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                 onClick={showNext}
               >
-                →
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
               </button>
             </div>
           </div>

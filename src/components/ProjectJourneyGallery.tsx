@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+const lightboxExitDuration = 160
+
 interface GalleryImage {
   src: string
   width: number
@@ -13,16 +15,34 @@ interface ProjectJourneyGalleryProps {
 
 export default function ProjectJourneyGallery({ images }: ProjectJourneyGalleryProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [isClosing, setIsClosing] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const closeRef = useRef<HTMLButtonElement>(null)
+  const closeTimeoutRef = useRef<number | null>(null)
   const currentImage = useMemo(() => images[currentIndex], [currentIndex])
 
   const openGallery = (index: number) => {
+    if (closeTimeoutRef.current !== null) {
+      window.clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
     setCurrentIndex(index)
+    setIsClosing(false)
     setIsOpen(true)
   }
 
-  const closeGallery = () => setIsOpen(false)
+  const closeGallery = () => {
+    if (isClosing) return
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const closeDuration = prefersReducedMotion ? 100 : lightboxExitDuration
+    setIsClosing(true)
+    closeTimeoutRef.current = window.setTimeout(() => {
+      setIsOpen(false)
+      setIsClosing(false)
+      closeTimeoutRef.current = null
+    }, closeDuration)
+  }
 
   const showPrev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
   const showNext = () => setCurrentIndex((prev) => (prev + 1) % images.length)
@@ -47,6 +67,14 @@ export default function ProjectJourneyGallery({ images }: ProjectJourneyGalleryP
       previousFocus?.focus()
     }
   }, [isOpen, images.length])
+
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current !== null) {
+        window.clearTimeout(closeTimeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-wrap items-center justify-center gap-4 text-sm">
@@ -80,7 +108,8 @@ export default function ProjectJourneyGallery({ images }: ProjectJourneyGalleryP
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4"
+          className="gallery-lightbox fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4"
+          data-state={isClosing ? 'closing' : 'open'}
           role="dialog"
           aria-modal="true"
           aria-label={`${currentImage.label} — project journey`}
@@ -90,7 +119,7 @@ export default function ProjectJourneyGallery({ images }: ProjectJourneyGalleryP
             ref={closeRef}
             type="button"
             aria-label="Close project journey"
-            className="absolute top-5 right-5 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/60 bg-black/70 text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+            className="absolute top-5 right-5 flex h-11 w-11 cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/60 bg-black/70 text-white transition-colors hover:bg-black focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
             onClick={closeGallery}
           >
             <span aria-hidden="true">✕</span>
@@ -98,32 +127,55 @@ export default function ProjectJourneyGallery({ images }: ProjectJourneyGalleryP
           <button
             type="button"
             aria-label="Previous project stage"
-            className="absolute bottom-5 left-[calc(50%_-_3.5rem)] flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/60 bg-black/70 text-white transition hover:bg-black focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none sm:bottom-auto sm:left-6"
+            className="absolute bottom-5 left-[calc(50%_-_3.25rem)] flex h-11 w-11 cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/60 bg-black/70 text-white transition-colors hover:bg-black focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none sm:bottom-auto sm:left-6"
             onClick={(event) => {
               event.stopPropagation()
               showPrev()
             }}
           >
-            ←
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-5 w-5"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
           </button>
-          <img
-            src={currentImage.src}
-            alt={currentImage.label}
-            width={currentImage.width}
-            height={currentImage.height}
-            className="h-auto max-h-[80vh] max-w-[90vw] rounded-xl object-contain"
-            onClick={(event) => event.stopPropagation()}
-          />
+          <div className="gallery-lightbox-panel" onClick={(event) => event.stopPropagation()}>
+            <img
+              src={currentImage.src}
+              alt={currentImage.label}
+              width={currentImage.width}
+              height={currentImage.height}
+              className="h-auto max-h-[80vh] max-w-[90vw] rounded-xl object-contain"
+            />
+          </div>
           <button
             type="button"
             aria-label="Next project stage"
-            className="absolute right-[calc(50%_-_3.5rem)] bottom-5 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/60 bg-black/70 text-white transition hover:bg-black focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none sm:right-6 sm:bottom-auto"
+            className="absolute right-[calc(50%_-_3.25rem)] bottom-5 flex h-11 w-11 cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/60 bg-black/70 text-white transition-colors hover:bg-black focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none sm:right-6 sm:bottom-auto"
             onClick={(event) => {
               event.stopPropagation()
               showNext()
             }}
           >
-            →
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-5 w-5"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
           </button>
         </div>
       )}
