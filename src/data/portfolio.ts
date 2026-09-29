@@ -36,7 +36,7 @@ import greatNeckVideo from '@/assets/images/portfolio/great-neck-ny/great-neck-a
 import lafayetteBathroomShower from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-bathroom-shower-detail.jpg'
 import lafayetteBathroomTub from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-bathroom-tub-shower.jpg'
 import lafayetteBathroomVanity from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-bathroom-vanity-overview.jpg'
-import lafayetteBathroomVideo from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-bathroom-walkthrough.mp4?url'
+import lafayetteBathroomVideo from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-bathroom-walkthrough.webm?url'
 import lafayetteKitchen from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-custom-kitchen-entry.jpg'
 import lafayetteDiningDivider from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-dining-room-divider.jpg'
 import lafayetteEntryMillwork from '@/assets/images/portfolio/lafayette-residence-nyc/lafayette-entry-hall-millwork.jpg'
